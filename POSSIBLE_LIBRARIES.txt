@@ -1,5 +1,5 @@
 biblioteki js do funkcjonalnych tabel
-https://github.com/frappe/datatable
+https://github.com/frappe/datatable - faworyt
 https://handsontable.com/
 http://tabulator.info/
 https://github.com/future-architect/cheetah-grid
