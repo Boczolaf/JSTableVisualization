@@ -4,9 +4,9 @@ Komponent JS do wizualizacji i interakcji z CoNDeT
 Wymagania:
 -struktura projektu jako open source biblioteka JS 
 -tworzenie tabel pozwalających na wizualizację wprowadzonych danych regułowych
--dodawanie nowych tabel poprzez oddzielnie wywoływaną formatkę pozwalającą zdefiniować konkretne wiersze
+-dodawanie nowych tabel poprzez oddzielnie wywoływaną formatkę pozwalającą zdefiniować konkretne kolumny
 -modyfikacja tabel poprzez dodawanie lub usuwanie wierszy
--modyfikacja tabel poprzez edycję atrybutów wykonywaną w osobnej formatce
+-modyfikacja tabel poprzez edycję atrybutów wykonywaną w osobnej formatce (ta sama jak do dodwania nowych tabel)
 -możliwość operowania na zawartości tabel(przejścia pomiędzy komórkami, otwarcie edycji komórki itp.) przy pomocy klawiatury
 -możliwość zdefiniowania powiązań pomiędzy elementami tabel i innymi tabelami, wizualizacja połączeń, możliwość stworzenia połączeń jeden do wielu
 -funkcja undo
