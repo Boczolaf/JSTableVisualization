@@ -13,3 +13,6 @@ Wymagania:
 -funkcja redo
 -zapis struktury tabel do pliku json
 -odczyt z pliku json do stworzenia struktury tabel
+
+
+https://docs.google.com/document/d/1G-Bu3y2FyxGvGvYSgwIfbiWQJuW5nnagwibTRSHJejs/edit?usp=sharing
