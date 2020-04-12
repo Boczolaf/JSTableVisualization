@@ -1,27 +1,11 @@
 <!DOCTYPE html>
 <html>
 <style>
-    #mydiv {
-        position: absolute;
-        z-index: 9;
-        background-color: #f1f1f1;
-        text-align: center;
-        border: 1px solid #d3d3d3;
-    }
-
     #addtable {
         padding: 10px;
         cursor: crosshair;
         z-index: 10;
         background-color: #32CD32;
-        color: #fff;
-    }
-
-    #mydivheader {
-        padding: 10px;
-        cursor: move;
-        z-index: 10;
-        background-color: #2196F3;
         color: #fff;
     }
 </style>
@@ -31,16 +15,6 @@
 <p>Click below to add another table</p>
 <div id="addtable">Click here</div>
 <p>Click and hold the mouse button down while moving the DIV element</p>
-
-<!-- create the container element -->
-<div id="mydiv">
-    <div id="mydivheader">Click here to move</div>
-    <div id="datatable"></div>
-
-
-</div>
-
-
 <link href="https://unpkg.com/frappe-datatable@0.0.5/dist/frappe-datatable.min.css" rel="stylesheet">
 <!-- include the dependencies -->
 <script src="https://unpkg.com/sortablejs@1.7.0/Sortable.min.js"></script>
@@ -53,7 +27,6 @@
 <script>
     //Make the DIV element draggagle:
     var tmp = document.querySelector(".data-table-row td[data-is-header='1']")
-    dragElement(document.getElementById("mydiv"));
 
     function dragElement(elmnt) {
         var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -94,51 +67,49 @@
             document.onmouseup = null;
             document.onmousemove = null;
         }
-
-    const datatable = new DataTable('#datatable', {
-        columns: ['Name', 'Position', 'Salary'],
-        data: [
-            ['Faris', 'Software Developer', '$1200'],
-            ['Manas', 'Software Engineer', '$1400'],
-        ]
-    });
-        var index = 0;
-        function getNextIndex(){
-            index = index +1;
-            return index;
-        }
-        document.getElementById("addtable").onclick = function () {
-            document.getElementById("addtable").style.backgroundColor = "red";
+    }
+        function firstStepCreateDiv(){document.getElementById("addtable").style.backgroundColor = "red";
             document.getElementById("addtable").style.backgroundColor = "green";
-            var div = document.createElement("div");
-            div.id = "#div" +getNextIndex();
+            let nextIndex = getNextIndex();
+            let div = document.createElement("div");
+            div.id = "#div" +nextIndex;
             div.style.position = "absolute";
             div.style.zIndex = "9";
             div.style.backgroundColor = "#f1f1f1";
             div.style.textAlign = "center";
             div.style.border = "1px solid #d3d3d3";
-            var div1 = document.createElement("div");
-            div1.id = "#divheader" +getNextIndex();
+            let div1 = document.createElement("div");
+            div1.id = "#divheader" +nextIndex;
             div1.textContent = "Click here to move"
             div1.style.padding = "10px";
             div1.style.cursor = "move";
             div1.style.zIndex = "10";
             div1.style.backgroundColor = "#2196F3";
             div1.style.color = "#fff";
-            var div2 = document.createElement("div");
-            div2.id="#datatable1";
+            let div2 = document.createElement("div");
+            div2.id="#datatable"+nextIndex;
             div.appendChild(div1);
             div.appendChild(div2);
             dragElement(div);
             document.body.appendChild(div);
-            const table = new DataTable(div2, {
-                columns: ['Name', 'Position', 'Salary'],
-                data: [
-                    ['123', 'Software Developer', '$1200'],
-                    ['321', 'Software Engineer', '$1400'],
-                ]
-            });
+            createTable(div2);
         }
+    var index = 0;
+    function getNextIndex(){
+        index = index +1;
+        return index;
+    }
+    function createTable(div){
+        return new DataTable(div, {
+            columns: ['Name', 'Position', 'Salary'],
+            data: [
+                ['123', 'Software Developer', '$1200'],
+                ['321', 'Software Engineer', '$1400'],
+            ]
+        });
+    }
+        document.getElementById("addtable").onclick = function () {
+            firstStepCreateDiv();
     }
 </script>
 
