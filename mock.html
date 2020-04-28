@@ -27,7 +27,8 @@
 <body>
 
 <h1>Draggable DIV Element</h1>
-
+<label for="tabName">Insert table name</label><br/>
+<input type="text" id="tabName" name="name"><br/>
 <label for="colNames">Insert columns headers separated with ";"</label><br/>
 <input type="text" id="colNames" name="cols"><br/>
 <label for="rowCount">number of rows</label><br/>
@@ -92,7 +93,8 @@
         }
     }
 
-    function firstStepCreateDiv(){document.getElementById("addtable").style.backgroundColor = "red";
+    function firstStepCreateDiv(){
+        document.getElementById("addtable").style.backgroundColor = "red";
         let nextIndex = getNextIndex();
         let div = document.createElement("div");
         div.id = "maindiv" +nextIndex;
@@ -108,6 +110,7 @@
         createTable(div2);
     }
     function firstStepCreateDiv3(){
+        let name = document.getElementById("tabName").value;
         let cols=document.getElementById("colNames").value;
         let rows=document.getElementById("rowCount").value;
         let colsarray=cols.split(";");
@@ -116,7 +119,7 @@
         div.id = "maindiv" +nextIndex;
         let div1 = document.createElement("div");
         div1.id = "divheader" +nextIndex;
-        div1.textContent = "Click here to move"
+        div1.textContent = name
         let div2 = document.createElement("div");
         div2.id="#datatable"+nextIndex;
         div.appendChild(div1);
@@ -136,31 +139,7 @@
             data: [
                 ['123', 'Software Developer', '$1200'],
                 ['321', 'Software Engineer', '$1400'],
-            ],
-            headerDropdown:[{
-                label: 'Add Column',
-                action: function () {
-                    addColumn(this , "New Column");
-                }
-            },
-                {
-                    label: 'Remove column',
-                    action: function (column) {
-                        this.removeColumn(column.colIndex);
-                    }
-                },
-                {
-                    label: 'Add row',
-                    action: function () {
-                        addRow(this);
-                    }
-                },
-                {
-                    label: 'Remove row',
-                    action: function () {
-                        removeRow(this);
-                    }
-                }]
+            ]
         });
     }
     function createTable3(div,colsarray,rows=3){
@@ -177,81 +156,8 @@
         return new DataTable(div, {
 
             columns: colsarray,
-            data: rowsdata,
-            headerDropdown:[{
-                label: 'Add Column',
-                action: function () {
-                    addColumn(this , "New Column");
-                }
-            },
-                {
-                    label: 'Remove column',
-                    action: function (column) {
-                        this.removeColumn(column.colIndex);
-                    }
-                },
-                {
-                    label: 'Add row',
-                    action: function () {
-                        addRow(this);
-                    }
-                },
-                {
-                    label: 'Remove row',
-                    action: function () {
-                        removeRow(this);
-                    }
-                }]
+            data: rowsdata
         });
-    }
-    function removeRow(div){
-        let columns = div.getColumns();
-        let rows = div.getRows();
-        let col =[];
-        let row =[];
-        let colcount=columns.length;
-        for(let j=1;j<colcount;j++){
-            col.push(columns[j]);
-        }
-        let rowscount=rows.length;
-        for(let j=0;j<rowscount-1;j++){
-            row.push(rows[j].slice(1));
-        }
-        div.refresh(row, col);
-    }
-
-    function addRow(div){
-        let columns = div.getColumns();
-        let rows = div.getRows();
-        let col =[];
-        let row =[];
-        let colcount=columns.length;
-        for(let j=1;j<colcount;j++){
-            col.push(columns[j]);
-        }
-        let rowscount=rows.length;
-        for(let j=0;j<rowscount;j++){
-            row.push(rows[j].slice(1));
-        }
-        row.push(rows[1].slice(1).fill("   "))
-        div.refresh(row, col);
-    }
-
-    function addColumn(div, Name){
-        let columns = div.getColumns();
-        let rows = div.getRows();
-        let col =[];
-        let row =[];
-        let colcount=columns.length;
-        for(let j=1;j<colcount;j++){
-            col.push(columns[j]);
-        }
-        let rowscount=rows.length;
-        for(let j=0;j<rowscount;j++){
-            row.push(rows[j].slice(1));
-        }
-        col.push(Name);
-        div.refresh(row, col);
     }
     document.getElementById("addtable").onclick = function () {
         firstStepCreateDiv();
