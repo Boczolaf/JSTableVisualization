@@ -1,38 +1,19 @@
 <!DOCTYPE html>
 <html>
-<style>
-    [id^="maindiv"] {
-        position: absolute;
-        z-index: 9;
-        background-color: #f1f1f1;
-        text-align: center;
-        border: 1px solid #d3d3d3;
-    }
 
-    [id^="divheader"]{
-        padding: 10px;
-        cursor: move;
-        z-index: 10;
-        background-color: #2196F3;
-        color: #fff;
-    }
-    #addtable {
-        padding: 10px;
-        cursor: crosshair;
-        z-index: 10;
-        background-color: #32CD32;
-        color: #fff;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="styles.css">
 <body>
 
 <h1>Draggable DIV Element</h1>
+
 <label for="tabName">Insert table name</label><br/>
-<input type="text" id="tabName" name="name"><br/>
+    <input type="text" id="tabName" name="name"><br/>
+
 <label for="colNames">Insert columns headers separated with ";"</label><br/>
-<input type="text" id="colNames" name="cols"><br/>
+    <input type="text" id="colNames" name="cols"><br/>
+
 <label for="rowCount">number of rows</label><br/>
-<input type="text" id="rowCount" default="3">
+    <input type="text" id="rowCount" default="3">
 
 <button type="button" onclick="firstStepCreateDiv3()">Add table</button>
 
@@ -40,6 +21,9 @@
 <br/>
 <div id="addtable">Click here to add example table</div>
 <p>Click and hold the mouse button down while moving the DIV element</p>
+
+
+
 <link href="https://unpkg.com/frappe-datatable@0.0.5/dist/frappe-datatable.min.css" rel="stylesheet">
 <!-- include the dependencies -->
 <script src="https://unpkg.com/sortablejs@1.7.0/Sortable.min.js"></script>
@@ -49,121 +33,9 @@
 <!-- initialize DataTable -->
 
 
-<script>
-    //Make the DIV element draggagle:
+<script src="draggable.js"></script>
+<script src="newtable.js"></script>
 
-    function dragElement(elmnt) {
-        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        let headerid = elmnt.id.replace("maindiv","divheader");
-        if(document.getElementById(headerid)){
-            document.getElementById(headerid).onmousedown = dragMouseDown;
-        }else {
-            /* otherwise, move the DIV from anywhere inside the DIV:*/
-            elmnt.onmousedown = dragMouseDown;
-        }
-
-        function dragMouseDown(e) {
-            e = e || window.event;
-            e.preventDefault();
-            // get the mouse cursor position at startup:
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            // call a function whenever the cursor moves:
-            document.onmousemove = elementDrag;
-        }
-
-        function elementDrag(e) {
-            e = e || window.event;
-            e.preventDefault();
-            // calculate the new cursor position:
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            // set the element's new position:
-            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-        }
-
-        function closeDragElement() {
-            /* stop moving when mouse button is released:*/
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
-    }
-
-    function firstStepCreateDiv(){
-        document.getElementById("addtable").style.backgroundColor = "red";
-        let nextIndex = getNextIndex();
-        let div = document.createElement("div");
-        div.id = "maindiv" +nextIndex;
-        let div1 = document.createElement("div");
-        div1.id = "divheader" +nextIndex;
-        div1.textContent = "Click here to move"
-        let div2 = document.createElement("div");
-        div2.id="#datatable"+nextIndex;
-        div.appendChild(div1);
-        div.appendChild(div2);
-        document.body.appendChild(div);
-        createTable(div2);
-        dragElement(div);
-    }
-    function firstStepCreateDiv3(){
-        let name = document.getElementById("tabName").value;
-        let cols=document.getElementById("colNames").value;
-        let rows=document.getElementById("rowCount").value;
-        let colsarray=cols.split(";");
-        let nextIndex = getNextIndex();
-        let div = document.createElement("div");
-        div.id = "maindiv" +nextIndex;
-        let div1 = document.createElement("div");
-        div1.id = "divheader" +nextIndex;
-        div1.textContent = name
-        let div2 = document.createElement("div");
-        div2.id="#datatable"+nextIndex;
-        div.appendChild(div1);
-        div.appendChild(div2);
-        document.body.appendChild(div);
-        createTable3(div2,colsarray,rows);
-        dragElement(div);
-    }
-    var index = 0;
-    function getNextIndex(){
-        index = index +1;
-        return index;
-    }
-    function createTable(div){
-        return new DataTable(div, {
-            columns: ['Name', 'Position', 'Salary'],
-            data: [
-                ['123', 'Software Developer', '$1200'],
-                ['321', 'Software Engineer', '$1400'],
-            ]
-        });
-    }
-    function createTable3(div,colsarray,rows=3){
-        let rowscount=parseInt(rows);
-        if(!Number.isInteger(rowscount)){
-            rowscount=3;
-        }
-        let rowsdata=[];
-        for(let j=0;j<rowscount;j++) {
-            const newdata =new Array(colsarray.length);
-            var newdata2=newdata.fill("   ");
-            rowsdata.push(newdata2);
-        }
-        return new DataTable(div, {
-
-            columns: colsarray,
-            data: rowsdata
-        });
-    }
-    document.getElementById("addtable").onclick = function () {
-        firstStepCreateDiv();
-    }
-
-</script>
 
 </body>
 </html>
