@@ -1,7 +1,7 @@
-Komponent JS do wizualizacji i interakcji z CoNDeT
+# Komponent JS do wizualizacji i interakcji z CoNDeT
 
 
-Wymagania:
+## Wymagania:
 -struktura projektu jako open source biblioteka JS 
 -tworzenie tabel pozwalających na wizualizację wprowadzonych danych regułowych
 -dodawanie nowych tabel poprzez oddzielnie wywoływaną formatkę pozwalającą zdefiniować konkretne kolumny
@@ -14,5 +14,6 @@ Wymagania:
 -zapis struktury tabel do pliku json
 -odczyt z pliku json do stworzenia struktury tabel
 
-
+## Źródła i inne
 https://docs.google.com/document/d/1G-Bu3y2FyxGvGvYSgwIfbiWQJuW5nnagwibTRSHJejs/edit?usp=sharing
+https://github.com/frappe/datatable Licencja MIT
