@@ -105,9 +105,9 @@
         div2.id="#datatable"+nextIndex;
         div.appendChild(div1);
         div.appendChild(div2);
-        dragElement(div);
         document.body.appendChild(div);
         createTable(div2);
+        dragElement(div);
     }
     function firstStepCreateDiv3(){
         let name = document.getElementById("tabName").value;
@@ -124,9 +124,9 @@
         div2.id="#datatable"+nextIndex;
         div.appendChild(div1);
         div.appendChild(div2);
-        dragElement(div);
         document.body.appendChild(div);
         createTable3(div2,colsarray,rows);
+        dragElement(div);
     }
     var index = 0;
     function getNextIndex(){
