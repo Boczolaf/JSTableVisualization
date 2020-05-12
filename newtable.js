@@ -57,10 +57,11 @@ function getNextIndex(){
 //tworzy samą tabelę z przykładowymi danymi
 function createSampleTable(div){
     return new DataTable(div, {
-        columns: ['Name', 'Position', 'Salary'],
+        checkboxColumn: true,
+        columns: ['Name', 'Position','', 'Salary',' ->'],
         data: [
-            ['123', 'Software Developer', '$1200'],
-            ['321', 'Software Engineer', '$1400'],
+            ['123', 'Software Developer','', '$1200',''],
+            ['321', 'Software Engineer','', '$1400',''],
         ]
     });
 }

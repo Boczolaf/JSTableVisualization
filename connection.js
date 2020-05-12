@@ -6,8 +6,6 @@
 
 
 
-
-
 //funkcja do testowania; stwórz sobie 2 tabele i wywołaj w konsoli:
 // test()
 //to powinno zrobic strzałkę i nawet przy przesówaniu powinno działać
