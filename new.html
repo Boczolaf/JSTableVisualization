@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<link rel="stylesheet" type="text/css" href="styles.css">
+<body>
+
+<h1>Draggable DIV Element</h1>
+
+<label for="tabName">Insert table name</label><br/>
+    <input type="text" id="tabName" name="name"><br/>
+
+<label for="colNames">Insert columns headers separated with ";"</label><br/>
+    <input type="text" id="colNames" name="cols">
+    <input type="text" id="argNames" name="args"><br/>
+
+<label for="rowCount">number of rows</label><br/>
+    <input type="text" id="rowCount" default="3">
+
+<button type="button" onclick="createMainDiv(0)">Add table</button>
+<br/>
+<br/>
+<div id="addtable">Click here to add example table</div>
+<p>Hold blue element do drag table</p>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+<style>
+    #svgid{
+        margin-top: 40px;
+        position: absolute;
+    }
+</style>
+
+<svg id = "svgid" xmlns="http://www.w3.org/2000/svg" width="100vw" height="100vh">
+    <defs>
+        <marker id="arrowhead" viewBox="0 0 10 10" refX="5" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+    </defs>
+    <g id="gsvg" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrowhead)">
+        <path id="newArrow"/>
+    </g>
+</svg>
+
+
+
+
+<link href="https://unpkg.com/frappe-datatable@0.0.5/dist/frappe-datatable.min.css" rel="stylesheet">
+<!-- include the dependencies -->
+<script src="https://unpkg.com/sortablejs@1.7.0/Sortable.min.js"></script>
+<script src="https://unpkg.com/clusterize.js@0.18.0/clusterize.min.js"></script>
+<!-- include the lib -->
+<script src="https://unpkg.com/frappe-datatable@0.0.5/dist/frappe-datatable.min.js"></script>
+<!-- initialize DataTable -->
+
+
+<script src="draggable.js"></script>
+<script src="newtable.js"></script>
+<script src="onenter.js"></script>
+<script src="connection.js"></script>
+
+
+</body>
+</html>

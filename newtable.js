@@ -1,44 +1,61 @@
-function firstStepCreateDiv(){
-    document.getElementById("addtable").style.backgroundColor = "red";
+
+//tworzy tabele z podanych wartości
+//jeśli ifsample==1 albo inputy są puste to tworzy przykładową
+function createMainDiv(ifsample) {
     let nextIndex = getNextIndex();
     let div = document.createElement("div");
-    div.id = "maindiv" +nextIndex;
+    div.id = "maindiv" + nextIndex;
     let div1 = document.createElement("div");
-    div1.id = "divheader" +nextIndex;
-    div1.textContent = "Click here to move"
+    div1.id = "divheader" + nextIndex;
     let div2 = document.createElement("div");
-    div2.id="#datatable"+nextIndex;
+    div2.id = "#datatable" + nextIndex;
     div.appendChild(div1);
     div.appendChild(div2);
     document.body.appendChild(div);
-    createTable(div2);
+
+    if(!ifsample) {
+        let name = document.getElementById("tabName").value;
+        let cols = document.getElementById("colNames").value;
+        let args = document.getElementById("argNames").value;
+        let rows = document.getElementById("rowCount").value;
+        let colsAndArgs = cols + "; ;" + args +"; ->";
+        let colsarray = colsAndArgs.split(";");
+        //let colsarray = cols.split(";");
+        if(name==""){
+            div1.textContent = "Click here to move";
+        }
+        else{
+            div1.textContent = name;
+        }
+        if ((!name && !cols && !rows)||ifsample) {
+            createSampleTable(div2);
+        } else {
+            createTableWithParameters(div2, colsarray, rows);
+        }
+    }
+    else{
+        div1.textContent = "Click here to move";
+        createSampleTable(div2);
+    }
+
     dragElement(div);
+    //każda kolejny div jest tworzony 16px od końca poprzedniego
+    div.style.top = (lastOffsetBottom   +"px");
+    lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
+    div.style.left = (div.offsetLeft +50) + "px";
+
+
 }
-function firstStepCreateDiv3(){
-    let name = document.getElementById("tabName").value;
-    let cols=document.getElementById("colNames").value;
-    let rows=document.getElementById("rowCount").value;
-    let colsarray=cols.split(";");
-    let nextIndex = getNextIndex();
-    let div = document.createElement("div");
-    div.id = "maindiv" +nextIndex;
-    let div1 = document.createElement("div");
-    div1.id = "divheader" +nextIndex;
-    div1.textContent = name
-    let div2 = document.createElement("div");
-    div2.id="#datatable"+nextIndex;
-    div.appendChild(div1);
-    div.appendChild(div2);
-    document.body.appendChild(div);
-    createTable3(div2,colsarray,rows);
-    dragElement(div);
-}
+
+var lastOffsetBottom=340;
 var index = 0;
 function getNextIndex(){
     index = index +1;
     return index;
 }
-function createTable(div){
+
+//tworzy samą tabelę z przykładowymi danymi
+function createSampleTable(div){
     return new DataTable(div, {
         columns: ['Name', 'Position', 'Salary'],
         data: [
@@ -47,7 +64,10 @@ function createTable(div){
         ]
     });
 }
-function createTable3(div,colsarray,rows=3){
+
+///tworzy samą tabelę z podanymi danymi
+// (div w którym ma byc tabela; array z nazwami kolumn; liczba wierszy (domyślnie 3))
+function createTableWithParameters(div,colsarray,rows=3){
     let rowscount=parseInt(rows);
     if(!Number.isInteger(rowscount)){
         rowscount=3;
@@ -65,6 +85,6 @@ function createTable3(div,colsarray,rows=3){
     });
 }
 document.getElementById("addtable").onclick = function () {
-    firstStepCreateDiv();
+    createMainDiv(1);
 }
 
