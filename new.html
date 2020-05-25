@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
-
+<head>
+    <meta charset="UTF-8">
+</head>
 <link rel="stylesheet" type="text/css" href="styles.css">
 <body>
 
 <h1>Draggable DIV Element</h1>
-
+<form class="formcreate">
 <label for="tabName">Insert table name</label><br/>
     <input type="text" id="tabName" name="name"><br/>
 
@@ -17,7 +19,15 @@
     <input type="text" id="rowCount" default="3">
 
 <button type="button" onclick="createMainDiv(0)">Add table</button>
-<br/>
+</form>
+<br>
+<form class="formconnect">
+table names to connect:<br/>
+<input type="text" id="connect1"><input type="text" id="connect2"><button type="button" onclick="testbutton()">connect tables</button>
+</form>
+<button type="button" onclick="allToJson()">download .jason file</button>
+<input type="file" id="selectFiles" value="Import" />
+<button type="button" id="import" onclick="allFromJson()">upload .jason file</button>
 <br/>
 <div id="addtable">Click here to add example table</div>
 <p>Hold blue element do drag table</p>
@@ -62,7 +72,7 @@
 <script src="newtable.js"></script>
 <script src="onenter.js"></script>
 <script src="connection.js"></script>
-
+<script src="json.js"></script>
 
 </body>
 </html>
