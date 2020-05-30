@@ -19,7 +19,7 @@ function createMainDiv(ifsample) {
         let cols = document.getElementById("colNames").value;
         let args = document.getElementById("argNames").value;
         let rows = document.getElementById("rowCount").value;
-        let colsAndArgs = cols + "; ;" + args +"; ->";
+        let colsAndArgs = cols + ";__;" + args +";   --->  ";
         let colsarray = colsAndArgs.split(";");
         //let colsarray = cols.split(";");
         if(name==""){
@@ -31,8 +31,11 @@ function createMainDiv(ifsample) {
 
         }
         if ((!name && !cols && !rows)||ifsample) {
+            div.setAttribute("lastcolindex","4");
             createSampleTable(div2);
         } else {
+            div.setAttribute("lastcolindex",colsarray.length);
+            console.log("cols"+colsarray.length);
             createTableWithParameters(div2, colsarray, rows);
         }
     }
@@ -40,6 +43,8 @@ function createMainDiv(ifsample) {
         div1.textContent = "Click here to move";
         createSampleTable(div2);
     }
+
+    addListeners();
     dragElement(div);
     //każda kolejny div jest tworzony 16px od końca poprzedniego
     div.style.top = (lastOffsetBottom   +"px");

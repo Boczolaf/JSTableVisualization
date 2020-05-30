@@ -30,6 +30,13 @@ function dragElement(elmnt) {
         // set the element's new position:
         elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        if(elmnt.hasAttribute("connectedcells")){
+            let ccells = elmnt.getAttribute("connectedcells").split(";");
+            for(let i =0;i<ccells.length;i++){
+                console.log(ccells[i]);
+                dragArrow(document.getElementById(ccells[i]))
+            }
+        }
         dragArrow(elmnt);
     }
 

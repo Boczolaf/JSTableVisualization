@@ -1,21 +1,4 @@
-//update: 11.05.20 15:13
-//działa
 
-//update 24.05.20 6:37 -- zmieniłem testbutton(); działa też gdy nazwy tebel to cyfry
-
-//jak chcesz połączyc divy to connectElements
-
-
-
-//funkcja do testowania; stwórz sobie 2 tabele i wywołaj w konsoli:
-// test()
-//to powinno zrobic strzałkę i nawet przy przesówaniu powinno działać
-
-function test() {
-    var el1=document.getElementById("maindiv1");
-    var el2=document.getElementById("maindiv2");
-    connectElements(el1,el2);
-}
 function testbutton(){
     let el1name="'"+document.getElementById("connect1").value+"'";
     let el2name="'"+ document.getElementById("connect2").value+"'";
@@ -30,12 +13,28 @@ function connectElements(el1,el2) {
     svgArrow.setAttribute("id", "arrow"+getNextArrIndex());
     svgArrow.setAttribute("arrow",'true');
     document.getElementById("gsvg").appendChild(svgArrow);
+    if(el1.hasAttribute("tabindex")){
+        let el1ccells="";
+        if(el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.hasAttribute("connectedcells")) {
+            el1ccells = el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("connectedcells")+";";
+        }
+        el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.setAttribute("connectedcells",el1ccells+el1.id);
+    }
+    if(el2.hasAttribute("tabindex")){
+        let el2ccells="";
+        if(el2.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.hasAttribute("connectedcells")) {
+            el2ccells = el2.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("connectedcells")+";";
+        }
+        el2.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.setAttribute("connectedcells",el2ccells+el2.id);
+    }
     el1.setAttribute("connectedTo", el2.id);
     el1.setAttribute("arrow", svgArrow.id);
     el1.setAttribute("side", 1)
+    /*
     el2.setAttribute("connectedTo", el1.id);
     el2.setAttribute("arrow", svgArrow.id);
     el2.setAttribute("side", 2)
+     */
     drawLine(el1, el2, svgArrow);
 
     if(el1.getAttribute("connections")!=null){
@@ -55,9 +54,51 @@ function connectElements(el1,el2) {
         let el2conn = el1.id + "," + svgArrow.id + "," + "2";
         el2.setAttribute("connections",el2conn);
     }
+}
+
+function disconnect(el1) {
+    document.getElementById(el1.getAttribute("arrow")).remove();
+    let el2 = document.getElementById(el1.getAttribute("connectedto"));
+    el1.removeAttribute("connectedto");
+    el1.removeAttribute("arrow");
+    el1.removeAttribute("side");
+    el1.removeAttribute("connections");
+    let el2connectionsarray=el2.getAttribute("connections").split(";")
+    let ret="";
+    for(let i =0;i<el2connectionsarray.length;i++){
+        let tmp = el2connectionsarray[i].split(",")
+        if(tmp[0]!=el1.id){
+            ret+=tmp[0]+","+tmp[1]+","+tmp[2]+";";
+        }
+    }
+    if(ret){
+        ret=ret.substring(0, ret.length - 1);
+        el2.setAttribute("connections",ret);
+    }else{
+        el2.removeAttribute("connections");
+    }
+
+    let parentconnectedcells=el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("connectedcells").split(";")
+    let ret2="";
+    for(let j=0;j<parentconnectedcells.length;j++){
+        if(parentconnectedcells[j]!=el1.id){
+            ret2+=parentconnectedcells[j]+";"
+        }
+    }
+    if(ret2){
+        ret2=ret2.substring(0, ret2.length - 1);
+        el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.setAttribute("connectedcells",ret2);
+    }else{
+        el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.removeAttribute("connectedcells");
+    }
 
 
 }
+
+
+
+
+
 //arr jak arrow nie jak array
 var arrindex = 0
 function getNextArrIndex(){
@@ -86,11 +127,14 @@ function arrayToString(array){
 }
 
 
-//rysuje strałkę tylko el1 musi miec atrybuty ustawione/musi być na nim wcześniej użyte connectElements
+//el1--->el2
 function dragArrow(el1){
-    if(el1.hasAttribute("arrow")) {
+    if(el1.hasAttribute("arrow")&&0) {
         let arrow = document.getElementById(el1.getAttribute("arrow"));
         let el2 = document.getElementById(el1.getAttribute("connectedTo"));
+        if(el2.hasAttribute("tabindex")){
+            el2=el2.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+        }
         if(el1.getAttribute("side")==1) {
             drawLine(el1, el2, arrow);
         }else{
@@ -118,13 +162,6 @@ function dragArrow(el1){
 
 //przerysowuje strzałkę 'arrow' od elementu 'el1' do elementu 'el2'
 function drawLine(el1,el2,arrow,rowindex=-2){
-    //dla rowindex=-2 łączy z headerem
-    // wysokośc jednego wiersza to 40p
-// wiersze indexowane od 0
-//pathing strzałek; możliwe pozycje el2 względem el1
-//A |  B  | C
-//D | el1 | E
-//F |  G  | H
 
     let aw=el1.offsetWidth;
     let aw2=el2.offsetWidth;
@@ -136,24 +173,13 @@ function drawLine(el1,el2,arrow,rowindex=-2){
     let svgY=getOffset(document.getElementById("svgid")).top;
     let curve1=""+(ax +aw + 100) + "," + (ay+100-svgY+rowindex*40+100 ) + " ";
     let curve2=""+(bx - 100) + "," + (by -100 - svgY) + " ";
-    /*
-    if((by-ay<100)&&(ay-by<100)&&(bx>ax)){
-        curve2=""+bx + "," + (by - svgY+10) + " "
-        curve1=""+(ax +aw) + "," + (ay-svgY+rowindex*40+100 ) + " ";
-    }
-    */
     var dStrLeft2 =
-        // el1.x el1.y  beziercurve1.x beziercurve1.y
-        // beziercurve2.x beziercurve2.y el2.x el2.y
         "M" +
-        (ax    +aw ) + "," + (ay-svgY+rowindex*40+100) + " " +
+        (ax    +aw -12 ) + "," + (ay-svgY+rowindex*40+100) + " " +
         "C" +
         curve1 +
         curve2 +
         (bx  -15   ) + "," + (by -svgY+20);
-    //console.log("strz:  "+dStrLeft2)
-    //console.log(curve1);
-    //console.log(curve2);
     arrow.setAttribute("d", dStrLeft2);
 }
 
@@ -164,4 +190,11 @@ function getOffset(el) {
         left: rect.left + window.scrollX,
         top: rect.top + window.scrollY
     };
+}
+
+
+var all= document.querySelectorAll(".at");
+for(let i=0;i<all.length;i++){
+    console.log(i);
+    all[i].bindEvents();
 }
