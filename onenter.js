@@ -2,6 +2,7 @@
 // nie trzeba używac przycisku 'Add table'
 
 //var allInputs = document.getElementsByTagName("input");
+
 var allinputscreate = document.querySelectorAll("form.formcreate input");
 
 var allinputsconnect = document.querySelectorAll("form.formconnect input");
@@ -12,12 +13,35 @@ for(let i =0; i<allinputscreate.length; i++) {
             createMainDiv();
         }
     });
+    for(let i =0; i<allinputsconnect.length; i++) {
+        allinputsconnect[i].addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                testbutton();
+            }
+        });
+    }
 }
-for(let i =0; i<allinputsconnect.length; i++) {
-    allinputsconnect[i].addEventListener("keyup", function (event) {
-        // Number 13 is the "Enter" key on the keyboard
-        if (event.keyCode === 13) {
-            testbutton();
+
+//to samo tylko że w funkcji żeby można było po wczytaniu z jsona wywołać
+function ummyes(){
+    var allinputscreate = document.querySelectorAll("form.formcreate input");
+
+    var allinputsconnect = document.querySelectorAll("form.formconnect input");
+    for(let i =0; i<allinputscreate.length; i++) {
+        allinputscreate[i].addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                createMainDiv();
+            }
+        });
+        for(let i =0; i<allinputsconnect.length; i++) {
+            allinputsconnect[i].addEventListener("keyup", function (event) {
+                // Number 13 is the "Enter" key on the keyboard
+                if (event.keyCode === 13) {
+                    testbutton();
+                }
+            });
         }
-    });
+    }
 }

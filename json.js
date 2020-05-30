@@ -40,6 +40,7 @@ function allFromJson(){
             //ustawianie indexów maindivów i strzałek żeby uwzględniało te z jsona
             index=maindivs.length;
             arrindex=document.querySelectorAll("[arrow='true']").length;
+            ummyes();
 
         }
 
