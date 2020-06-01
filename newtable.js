@@ -9,7 +9,7 @@ function createMainDiv(ifsample) {
     let div1 = document.createElement("div");
     div1.id = "divheader" + nextIndex;
     let div2 = document.createElement("div");
-    div2.id = "#datatable" + nextIndex;
+    div2.id = "datatable" + nextIndex;
     div.appendChild(div1);
     div.appendChild(div2);
     document.body.appendChild(div);
@@ -43,7 +43,7 @@ function createMainDiv(ifsample) {
         div1.textContent = "Click here to move";
         createSampleTable(div2);
     }
-
+    console.log("##############################################")
     addListeners();
     dragElement(div);
     //każda kolejny div jest tworzony 16px od końca poprzedniego
@@ -86,13 +86,51 @@ function createTableWithParameters(div,colsarray,rows=3){
         var newdata2=newdata.fill("   ");
         rowsdata.push(newdata2);
     }
-    return new DataTable(div, {
+    var ret= new DataTable(div, {
 
         columns: colsarray,
         data: rowsdata
     });
+    tabletable["'"+div.id+"'"]=ret;
+    return ret;
 }
 document.getElementById("addtable").onclick = function () {
     createMainDiv(1);
 }
 
+
+function createMainDivJ(name,cols,data) {
+    let nextIndex = getNextIndex();
+    let div = document.createElement("div");
+    div.id = "maindiv" + nextIndex;
+    div.className="maindiv";
+    let div1 = document.createElement("div");
+    div1.id = "divheader" + nextIndex;
+    let div2 = document.createElement("div");
+    div2.id = "datatable" + nextIndex;
+    div.appendChild(div1);
+    div.appendChild(div2);
+    document.body.appendChild(div);
+    div1.textContent = name;
+    div.setAttribute("name",name);
+    div.setAttribute("lastcolindex",cols.length);
+    createTableWithParametersJ(div2, cols, data);
+    console.log("##############################################")
+    addListeners();
+    dragElement(div);
+    //każda kolejny div jest tworzony 16px od końca poprzedniego
+    div.style.top = (lastOffsetBottom   +"px");
+    lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
+    div.style.left = (div.offsetLeft +50) + "px";
+    return div
+
+}
+function createTableWithParametersJ(div,cols,data){
+    var ret= new DataTable(div, {
+
+        columns: cols,
+        data: data
+    });
+    tabletable["'"+div.id+"'"]=ret;
+    return ret;
+}

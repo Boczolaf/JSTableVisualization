@@ -30,12 +30,10 @@ function connectElements(el1,el2) {
     el1.setAttribute("connectedTo", el2.id);
     el1.setAttribute("arrow", svgArrow.id);
     el1.setAttribute("side", 1)
-    /*
-    el2.setAttribute("connectedTo", el1.id);
-    el2.setAttribute("arrow", svgArrow.id);
-    el2.setAttribute("side", 2)
-     */
     drawLine(el1, el2, svgArrow);
+    /*
+
+     */
 
     if(el1.getAttribute("connections")!=null){
         let prevel1conn=el1.getAttribute("connections");
@@ -54,6 +52,7 @@ function connectElements(el1,el2) {
         let el2conn = el1.id + "," + svgArrow.id + "," + "2";
         el2.setAttribute("connections",el2conn);
     }
+
 }
 
 function disconnect(el1) {
@@ -100,9 +99,9 @@ function disconnect(el1) {
 
 
 //arr jak arrow nie jak array
-var arrindex = 0
 function getNextArrIndex(){
     arrindex = arrindex +1;
+    console.log("NEWARROW: ",arrindex);
     return arrindex;
 }
 // "connTo1,arrid1,side1;connTo2,arrid2,side2"
@@ -154,6 +153,7 @@ function dragArrow(el1){
             else{
                 let el2 = document.getElementById(tmp[0]);
                 let arrow=document.getElementById(tmp[1]);
+                console.log("157:",el2,el1,arrow)
                 drawLine(el2,el1,arrow);
             }
         }

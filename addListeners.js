@@ -7,8 +7,8 @@ function addListeners(){
     for(let i=0;i<tables.length;i++){
         let ind="td[data-col-index='"+tables[i].getAttribute("lastcolindex")+"']";
         let column = tables[i].querySelectorAll(ind);
-        for(let j =0;j<column.length;j++){
-            column[j].id="lastcol"+getNextLastColIndex();
+        for(let j =1;j<column.length;j++){
+            column[j].id="lastcol"+"|"+(j-1)+"|"+tables[i].id;
             column[j].addEventListener('change', (event) =>{
 
                 if(lastchangeCell!=event.composedPath()[0] && lastchangeString !=event.composedPath()[0].value) {

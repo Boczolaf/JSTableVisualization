@@ -25,7 +25,7 @@
 table names to connect:<br/>
 <input type="text" id="connect1"><input type="text" id="connect2"><button type="button" onclick="testbutton()">connect tables</button>
 </form>
-<button type="button" onclick="allToJson()">download .jason file</button>
+<button type="button" onclick="newjsonwrite()">download .jason file</button>
 <input type="file" id="selectFiles" value="Import" />
 <button type="button" id="import" onclick="allFromJson()">upload .jason file</button>
 <br/>
@@ -75,6 +75,9 @@ table names to connect:<br/>
 <script src="connection.js"></script>
 <script src="json.js"></script>
 <script src="addListeners.js"></script>
+<script >var tabletable={};
+var jsonResult={};
+arrindex=0;</script>
 
 </body>
 </html>

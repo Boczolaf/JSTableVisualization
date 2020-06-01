@@ -33,8 +33,15 @@ function dragElement(elmnt) {
         if(elmnt.hasAttribute("connectedcells")){
             let ccells = elmnt.getAttribute("connectedcells").split(";");
             for(let i =0;i<ccells.length;i++){
-                console.log(ccells[i]);
-                dragArrow(document.getElementById(ccells[i]))
+                let ccells2=ccells[i].split("|")
+                let column=elmnt.querySelectorAll("td[data-col-index='"+elmnt.getAttribute("lastcolindex")+"']");
+                for(let j=0;j<column.length;j++){
+                    if(column[j].getAttribute("data-row-index")==ccells2[i]){
+
+                        dragArrow(column[j])
+                    }
+                }
+
             }
         }
         dragArrow(elmnt);
