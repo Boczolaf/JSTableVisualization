@@ -32,7 +32,6 @@ function connectElements(el1,el2) {
     el1.setAttribute("side", 1)
     drawLine(el1, el2, svgArrow);
     /*
-
      */
 
     if(el1.getAttribute("connections")!=null){

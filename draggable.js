@@ -33,6 +33,7 @@ function dragElement(elmnt) {
         if(elmnt.hasAttribute("connectedcells")){
             let ccells = elmnt.getAttribute("connectedcells").split(";");
             for(let i =0;i<ccells.length;i++){
+
                 let ccells2=ccells[i].split("|")
                 let column=elmnt.querySelectorAll("td[data-col-index='"+elmnt.getAttribute("lastcolindex")+"']");
                 for(let j=0;j<column.length;j++){
@@ -41,6 +42,10 @@ function dragElement(elmnt) {
                         dragArrow(column[j])
                     }
                 }
+
+
+                console.log(ccells[i]);
+                dragArrow(document.getElementById(ccells[i]))
 
             }
         }

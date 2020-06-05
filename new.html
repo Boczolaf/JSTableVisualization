@@ -8,28 +8,23 @@
 
 <h1>Draggable DIV Element</h1>
 <form class="formcreate">
-<label for="tabName">Insert table name</label><br/>
+    <label for="tabName">Insert table name</label><br/>
     <input type="text" id="tabName" name="name"><br/>
 
-<label for="colNames">Insert columns headers separated with ";", first inputs, then outputs:</label><br/>
+    <label for="colNames">Insert columns headers separated with ";", first inputs, then outputs:</label><br/>
     <input type="text" id="colNames" name="cols">
     <input type="text" id="argNames" name="args"><br/>
 
-<label for="rowCount">number of rows</label><br/>
+    <label for="rowCount">number of rows</label><br/>
     <input type="text" id="rowCount" default="3">
 
-<button type="button" onclick="createMainDiv(0)">Add table</button>
+    <button type="button" onclick="createMainDiv(0)">Add table</button>
 </form>
 <br>
-<form class="formconnect">
-table names to connect:<br/>
-<input type="text" id="connect1"><input type="text" id="connect2"><button type="button" onclick="testbutton()">connect tables</button>
-</form>
 <button type="button" onclick="newjsonwrite()">download .jason file</button>
 <input type="file" id="selectFiles" value="Import" />
 <button type="button" id="import" onclick="allFromJson()">upload .jason file</button>
 <br/>
-<div id="addtable">Click here to add example table</div>
 <p>Hold blue element do drag table</p>
 
 

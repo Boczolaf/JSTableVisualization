@@ -12,6 +12,31 @@ function createMainDiv(ifsample) {
     div2.id = "datatable" + nextIndex;
     div.appendChild(div1);
     div.appendChild(div2);
+    div2.id = "#datatable" + nextIndex;
+    let div3 = document.createElement("button");
+    div3.id = "xButton"+ nextIndex;
+    div3.innerHTML= "X";
+    div3.addEventListener("click", function() {
+        //usuwa wychodzące strzałki
+        let lastcolindex = div.getAttribute("lastcolindex");
+        if(div.hasAttribute("connectedcells")) {
+            let rowindexes = div.getAttribute("connectedcells").split(";");
+            for (let i = 0; i < rowindexes.length; i++) {
+                disconnect(document.getElementById(rowindexes[i]))
+            }
+        }
+        //usuwa przychodzące strzałki
+        if(div.hasAttribute("connections")) {
+            let connections = div.getAttribute("connections").split(";");
+            for (let i = 0; i < connections.length; i++) {
+                disconnect(document.getElementById(connections[i].split(",")[0]))
+            }
+        }
+        this.parentElement.remove();});
+    div.appendChild(div1);
+    div.appendChild(div3);
+    div.appendChild(div2);
+
     document.body.appendChild(div);
 
     if(!ifsample) {
@@ -43,22 +68,47 @@ function createMainDiv(ifsample) {
         div1.textContent = "Click here to move";
         createSampleTable(div2);
     }
-    console.log("##############################################")
+
     addListeners();
     dragElement(div);
+
+    lastOffsetBottom=280;
+    foundparking=true;
+    getParkingLot(div);
     //każda kolejny div jest tworzony 16px od końca poprzedniego
     div.style.top = (lastOffsetBottom   +"px");
-    lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
+    //lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
     div.style.left = (div.offsetLeft +50) + "px";
+
 
 
 }
 
-var lastOffsetBottom=380;
+var lastOffsetBottom=280;
 var index = 0;
+var foundparking=true;
 function getNextIndex(){
     index = index +1;
     return index;
+}
+function getParkingLot(div){
+    let allmaindivs= document.getElementsByClassName("maindiv");
+    foundparking=true;
+    for(let i=0;i<allmaindivs.length;i++){
+        let maindiv=allmaindivs[i];
+        if(maindiv.id!=div.id) {
+            if ((maindiv.offsetTop + maindiv.offsetHeight) < lastOffsetBottom) {
+            } else {
+                if(div.offsetHeight+lastOffsetBottom>maindiv.offsetTop) {
+                    foundparking = false;
+                }
+            }
+            if (!foundparking) {
+                lastOffsetBottom = lastOffsetBottom + 50;
+                getParkingLot(div);
+            }
+        }
+    }
 }
 
 //tworzy samą tabelę z przykładowymi danymi
@@ -94,11 +144,9 @@ function createTableWithParameters(div,colsarray,rows=3){
     tabletable["'"+div.id+"'"]=ret;
     return ret;
 }
-document.getElementById("addtable").onclick = function () {
-    createMainDiv(1);
-}
 
 
+// J like json
 function createMainDivJ(name,cols,data) {
     let nextIndex = getNextIndex();
     let div = document.createElement("div");
