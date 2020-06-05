@@ -4,6 +4,20 @@
     background-color: #f1f1f1;
     text-align: center;
     border: 1px solid #d3d3d3;
+    overflow: auto;
+}
+
+
+[id^="xButton"]{
+    padding: 10px;
+    z-index: 11;
+    background-color: #f1f1f1;
+    color: #aaa;
+    width:20%;
+    display:inline-block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 [id^="divheader"]{
@@ -12,6 +26,11 @@
     z-index: 10;
     background-color: #2196F3;
     color: #fff;
+    width:80%;
+    display:inline-block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 #addtable {
     padding: 10px;
@@ -19,4 +38,8 @@
     z-index: 10;
     background-color: #32CD32;
     color: #fff;
+}
+#svgid{
+    pointer-events: none;
+    z-index: 1000;
 }
