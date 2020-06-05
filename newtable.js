@@ -9,11 +9,9 @@ function createMainDiv(ifsample) {
     let div1 = document.createElement("div");
     div1.id = "divheader" + nextIndex;
     let div2 = document.createElement("div");
-<<<<<<< Updated upstream
     div2.id = "datatable" + nextIndex;
     div.appendChild(div1);
     div.appendChild(div2);
-=======
     div2.id = "#datatable" + nextIndex;
     let div3 = document.createElement("button");
     div3.id = "xButton"+ nextIndex;
@@ -25,7 +23,6 @@ function createMainDiv(ifsample) {
     div.appendChild(div3);
     div.appendChild(div2);
 
->>>>>>> Stashed changes
     document.body.appendChild(div);
 
     if(!ifsample) {
@@ -57,11 +54,9 @@ function createMainDiv(ifsample) {
         div1.textContent = "Click here to move";
         createSampleTable(div2);
     }
-<<<<<<< Updated upstream
-    console.log("##############################################")
-=======
 
->>>>>>> Stashed changes
+    console.log("##############################################")
+
     addListeners();
     dragElement(div);
     //każda kolejny div jest tworzony 16px od końca poprzedniego
@@ -104,26 +99,18 @@ function createTableWithParameters(div,colsarray,rows=3){
         var newdata2=newdata.fill("   ");
         rowsdata.push(newdata2);
     }
-<<<<<<< Updated upstream
     var ret= new DataTable(div, {
-=======
-    return new DataTable(div, {
->>>>>>> Stashed changes
 
         columns: colsarray,
         data: rowsdata
     });
-<<<<<<< Updated upstream
     tabletable["'"+div.id+"'"]=ret;
     return ret;
-=======
->>>>>>> Stashed changes
 }
 document.getElementById("addtable").onclick = function () {
     createMainDiv(1);
 }
 
-<<<<<<< Updated upstream
 
 function createMainDivJ(name,cols,data) {
     let nextIndex = getNextIndex();
@@ -160,5 +147,3 @@ function createTableWithParametersJ(div,cols,data){
     tabletable["'"+div.id+"'"]=ret;
     return ret;
 }
-=======
->>>>>>> Stashed changes

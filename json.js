@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 
 
 function downloadObjectAsJson(exportObj, exportName){
@@ -124,7 +124,7 @@ function newjsonwrite(){
     console.log(json);
     downloadObjectAsJson(json, "data");
 }
-=======
+
 function allToJson() {
     var body = [].slice.call(document.getElementsByTagName('body'))[0];
     var json= body.innerHTML;
@@ -174,4 +174,4 @@ function allFromJson(){
         fr.readAsText(files.item(0));
 
 }
->>>>>>> Stashed changes
+

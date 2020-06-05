@@ -33,7 +33,7 @@ function dragElement(elmnt) {
         if(elmnt.hasAttribute("connectedcells")){
             let ccells = elmnt.getAttribute("connectedcells").split(";");
             for(let i =0;i<ccells.length;i++){
-<<<<<<< Updated upstream
+
                 let ccells2=ccells[i].split("|")
                 let column=elmnt.querySelectorAll("td[data-col-index='"+elmnt.getAttribute("lastcolindex")+"']");
                 for(let j=0;j<column.length;j++){
@@ -43,10 +43,10 @@ function dragElement(elmnt) {
                     }
                 }
 
-=======
+
                 console.log(ccells[i]);
                 dragArrow(document.getElementById(ccells[i]))
->>>>>>> Stashed changes
+
             }
         }
         dragArrow(elmnt);

@@ -30,19 +30,9 @@ function connectElements(el1,el2) {
     el1.setAttribute("connectedTo", el2.id);
     el1.setAttribute("arrow", svgArrow.id);
     el1.setAttribute("side", 1)
-<<<<<<< Updated upstream
     drawLine(el1, el2, svgArrow);
     /*
-
      */
-=======
-    /*
-    el2.setAttribute("connectedTo", el1.id);
-    el2.setAttribute("arrow", svgArrow.id);
-    el2.setAttribute("side", 2)
-     */
-    drawLine(el1, el2, svgArrow);
->>>>>>> Stashed changes
 
     if(el1.getAttribute("connections")!=null){
         let prevel1conn=el1.getAttribute("connections");
@@ -52,7 +42,6 @@ function connectElements(el1,el2) {
         let el1conn=el2.id+","+svgArrow.id+","+"1";
         el1.setAttribute("connections",el1conn);
     }
-<<<<<<< Updated upstream
 
     if(el2.getAttribute("connections")!=null){
         let prevel2conn = el2.getAttribute("connections");
@@ -62,17 +51,7 @@ function connectElements(el1,el2) {
         let el2conn = el1.id + "," + svgArrow.id + "," + "2";
         el2.setAttribute("connections",el2conn);
     }
-=======
->>>>>>> Stashed changes
 
-    if(el2.getAttribute("connections")!=null){
-        let prevel2conn = el2.getAttribute("connections");
-        let el2conn = prevel2conn + ";" + el1.id + "," + svgArrow.id + "," + "2";
-        el2.setAttribute("connections",el2conn);
-    }else{
-        let el2conn = el1.id + "," + svgArrow.id + "," + "2";
-        el2.setAttribute("connections",el2conn);
-    }
 }
 
 function disconnect(el1) {
@@ -119,15 +98,9 @@ function disconnect(el1) {
 
 
 //arr jak arrow nie jak array
-<<<<<<< Updated upstream
 function getNextArrIndex(){
     arrindex = arrindex +1;
     console.log("NEWARROW: ",arrindex);
-=======
-var arrindex = 0
-function getNextArrIndex(){
-    arrindex = arrindex +1;
->>>>>>> Stashed changes
     return arrindex;
 }
 // "connTo1,arrid1,side1;connTo2,arrid2,side2"
@@ -179,10 +152,7 @@ function dragArrow(el1){
             else{
                 let el2 = document.getElementById(tmp[0]);
                 let arrow=document.getElementById(tmp[1]);
-<<<<<<< Updated upstream
                 console.log("157:",el2,el1,arrow)
-=======
->>>>>>> Stashed changes
                 drawLine(el2,el1,arrow);
             }
         }
