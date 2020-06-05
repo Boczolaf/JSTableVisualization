@@ -156,7 +156,28 @@ function createMainDivJ(name,cols,data) {
     div1.id = "divheader" + nextIndex;
     let div2 = document.createElement("div");
     div2.id = "datatable" + nextIndex;
+    let div3 = document.createElement("button");
+    div3.id = "xButton"+ nextIndex;
+    div3.innerHTML= "X";
+    div3.addEventListener("click", function() {
+        //usuwa wychodzące strzałki
+        let lastcolindex = div.getAttribute("lastcolindex");
+        if(div.hasAttribute("connectedcells")) {
+            let rowindexes = div.getAttribute("connectedcells").split(";");
+            for (let i = 0; i < rowindexes.length; i++) {
+                disconnect(document.getElementById(rowindexes[i]))
+            }
+        }
+        //usuwa przychodzące strzałki
+        if(div.hasAttribute("connections")) {
+            let connections = div.getAttribute("connections").split(";");
+            for (let i = 0; i < connections.length; i++) {
+                disconnect(document.getElementById(connections[i].split(",")[0]))
+            }
+        }
+        this.parentElement.remove();});
     div.appendChild(div1);
+    div.appendChild(div3);
     div.appendChild(div2);
     document.body.appendChild(div);
     div1.textContent = name;
