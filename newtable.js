@@ -161,6 +161,7 @@ function createMainDivJ(name,cols,data) {
     div3.innerHTML= "X";
     div3.addEventListener("click", function() {
         //usuwa wychodzące strzałki
+        console.log("wychodzace");
         let lastcolindex = div.getAttribute("lastcolindex");
         if(div.hasAttribute("connectedcells")) {
             let rowindexes = div.getAttribute("connectedcells").split(";");
@@ -170,6 +171,7 @@ function createMainDivJ(name,cols,data) {
         }
         //usuwa przychodzące strzałki
         if(div.hasAttribute("connections")) {
+            console.log("przychodzace");
             let connections = div.getAttribute("connections").split(";");
             for (let i = 0; i < connections.length; i++) {
                 disconnect(document.getElementById(connections[i].split(",")[0]))
