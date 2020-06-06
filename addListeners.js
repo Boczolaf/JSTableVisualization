@@ -20,6 +20,8 @@ function addListeners(){
                         disconnect(event.composedPath()[2])
 
                     }
+
+                    let connections = event.composedPath()[2].value.split(",");
                     for(let g=0; g<connections.length;g++) {
                         let el2name = "div[name='" + connections[g] + "']";
                         let el2 = document.querySelector(el2name.replace(/\s+/g, ""));
@@ -29,6 +31,7 @@ function addListeners(){
                             } else {
                                 connectElements(el1, el2);
                             }
+
                         }
                     }
                 }
@@ -42,4 +45,5 @@ var lastcolindex = 0
 function getNextLastColIndex(){
     lastcolindex = lastcolindex +1;
     return lastcolindex;
+
 }

@@ -1,6 +1,4 @@
 
-
-
 function downloadObjectAsJson(exportObj, exportName){
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
     var downloadAnchorNode = document.createElement('a');
@@ -42,8 +40,10 @@ function allFromJson(){
             }
 
 
+
         let name = tablenames[i];
         let cols = jsonResult[tablenames[i]]['columns'];
+
 
             let maindiv = createMainDivJ(name, cols, data);
             for (let j = 0; j < Object.keys(jsonResult[tablenames[i]]['maindiv']).length; j++) {
@@ -68,14 +68,16 @@ function allFromJson(){
                     if(el2) {
                         connectElements(el1arr[k], el2);
                     }
-                            }
-                        }
 
-                    }
-
+                }
+            }
 
         }
-        ummyes();
+
+
+    }
+    ummyes();
+
 
     fr.readAsText(files.item(0));
 
@@ -124,6 +126,7 @@ function newjsonwrite(){
     console.log(json);
     downloadObjectAsJson(json, "data");
 }
+
 
 function allToJson() {
     var body = [].slice.call(document.getElementsByTagName('body'))[0];

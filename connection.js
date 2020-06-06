@@ -55,32 +55,45 @@ function connectElements(el1,el2) {
 }
 
 function disconnect(el1) {
-    document.getElementById(el1.getAttribute("arrow")).remove();
+
+    console.log("dc", el1);
+    if (el1.hasAttribute("arrow")) document.getElementById(el1.getAttribute("arrow")).remove();
+
     let el2 = document.getElementById(el1.getAttribute("connectedto"));
     el1.removeAttribute("connectedto");
     el1.removeAttribute("arrow");
     el1.removeAttribute("side");
     el1.removeAttribute("connections");
-    let el2connectionsarray=el2.getAttribute("connections").split(";")
-    let ret="";
-    for(let i =0;i<el2connectionsarray.length;i++){
-        let tmp = el2connectionsarray[i].split(",")
-        if(tmp[0]!=el1.id){
-            ret+=tmp[0]+","+tmp[1]+","+tmp[2]+";";
+
+    let ret = "";
+    if(el2!=null ) {
+        if (el2.hasAttribute("connections")) {
+
+            let el2connectionsarray = el2.getAttribute("connections").split(";")
+
+            for (let i = 0; i < el2connectionsarray.length; i++) {
+                let tmp = el2connectionsarray[i].split(",")
+                if (tmp[0] != el1.id) {
+                    ret += tmp[0] + "," + tmp[1] + "," + tmp[2] + ";";
+                }
+            }
+        }
+        if (ret) {
+            ret = ret.substring(0, ret.length - 1);
+            el2.setAttribute("connections", ret);
+        } else {
+            el2.removeAttribute("connections");
         }
     }
-    if(ret){
-        ret=ret.substring(0, ret.length - 1);
-        el2.setAttribute("connections",ret);
-    }else{
-        el2.removeAttribute("connections");
-    }
+    console.log("noniewiem",el1)
+    let ret2 = "";
+    if(el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.hasAttribute("connectedcells") ) {
+        let parentconnectedcells = el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("connectedcells").split(";")
 
-    let parentconnectedcells=el1.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("connectedcells").split(";")
-    let ret2="";
-    for(let j=0;j<parentconnectedcells.length;j++){
-        if(parentconnectedcells[j]!=el1.id){
-            ret2+=parentconnectedcells[j]+";"
+        for (let j = 0; j < parentconnectedcells.length; j++) {
+            if (parentconnectedcells[j] != el1.id) {
+                ret2 += parentconnectedcells[j] + ";"
+            }
         }
     }
     if(ret2){
