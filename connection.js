@@ -55,13 +55,16 @@ function connectElements(el1,el2) {
 }
 
 function disconnect(el1) {
+
     console.log("dc", el1);
     if (el1.hasAttribute("arrow")) document.getElementById(el1.getAttribute("arrow")).remove();
+
     let el2 = document.getElementById(el1.getAttribute("connectedto"));
     el1.removeAttribute("connectedto");
     el1.removeAttribute("arrow");
     el1.removeAttribute("side");
     el1.removeAttribute("connections");
+
     let ret = "";
     if(el2!=null ) {
         if (el2.hasAttribute("connections")) {

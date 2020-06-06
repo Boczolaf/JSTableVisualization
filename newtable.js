@@ -17,6 +17,7 @@ function createMainDiv(ifsample) {
     div3.id = "xButton"+ nextIndex;
     div3.innerHTML= "X";
     div3.addEventListener("click", function() {
+
         //usuwa wychodzące strzałki
         let lastcolindex = div.getAttribute("lastcolindex");
         if(div.hasAttribute("connectedcells")) {
@@ -32,6 +33,7 @@ function createMainDiv(ifsample) {
                 disconnect(document.getElementById(connections[i].split(",")[0]))
             }
         }
+
         this.parentElement.remove();});
     div.appendChild(div1);
     div.appendChild(div3);
@@ -69,6 +71,7 @@ function createMainDiv(ifsample) {
         createSampleTable(div2);
     }
 
+
     addListeners();
     dragElement(div);
 
@@ -81,12 +84,10 @@ function createMainDiv(ifsample) {
     div.style.left = (div.offsetLeft +50) + "px";
 
 
-
-}
-
 var lastOffsetBottom=280;
 var index = 0;
 var foundparking=true;
+
 function getNextIndex(){
     index = index +1;
     return index;
@@ -180,6 +181,36 @@ function createMainDivJ(name,cols,data) {
         this.parentElement.remove();});
     div.appendChild(div1);
     div.appendChild(div3);
+    div.appendChild(div2);
+    document.body.appendChild(div);
+    div1.textContent = name;
+    div.setAttribute("name",name);
+    div.setAttribute("lastcolindex",cols.length);
+    createTableWithParametersJ(div2, cols, data);
+    console.log("##############################################")
+    addListeners();
+    dragElement(div);
+    //każda kolejny div jest tworzony 16px od końca poprzedniego
+    div.style.top = (lastOffsetBottom   +"px");
+    lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
+    div.style.left = (div.offsetLeft +50) + "px";
+    return div
+
+}
+function createTableWithParametersJ(div,cols,data){
+    var ret= new DataTable(div, {
+
+
+function createMainDivJ(name,cols,data) {
+    let nextIndex = getNextIndex();
+    let div = document.createElement("div");
+    div.id = "maindiv" + nextIndex;
+    div.className="maindiv";
+    let div1 = document.createElement("div");
+    div1.id = "divheader" + nextIndex;
+    let div2 = document.createElement("div");
+    div2.id = "datatable" + nextIndex;
+    div.appendChild(div1);
     div.appendChild(div2);
     document.body.appendChild(div);
     div1.textContent = name;

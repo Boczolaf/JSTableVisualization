@@ -20,13 +20,18 @@ function addListeners(){
                         disconnect(event.composedPath()[2])
 
                     }
-                    let el2name = "div[name='" + event.composedPath()[0].value + "']";
-                    let el2 = document.querySelector(el2name.replace(/\s+/g, ""));
-                    let el1 = event.composedPath()[2]
-                    if (el2) {
-                        if (el1.id == el2.id) {
-                        } else {
-                            connectElements(el1, el2);
+
+                    let connections = event.composedPath()[2].value.split(",");
+                    for(let g=0; g<connections.length;g++) {
+                        let el2name = "div[name='" + connections[g] + "']";
+                        let el2 = document.querySelector(el2name.replace(/\s+/g, ""));
+                        let el1 = event.composedPath()[2]
+                        if (el2) {
+                            if (el1.id == el2.id) {
+                            } else {
+                                connectElements(el1, el2);
+                            }
+
                         }
                     }
                 }
@@ -40,4 +45,5 @@ var lastcolindex = 0
 function getNextLastColIndex(){
     lastcolindex = lastcolindex +1;
     return lastcolindex;
+
 }
