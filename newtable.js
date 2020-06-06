@@ -5,7 +5,7 @@ function createMainDiv(ifsample) {
     let nextIndex = getNextIndex();
     let div = document.createElement("div");
     div.id = "maindiv" + nextIndex;
-    div.className="maindiv";
+    div.className = "maindiv";
     let div1 = document.createElement("div");
     div1.id = "divheader" + nextIndex;
     let div2 = document.createElement("div");
@@ -14,59 +14,58 @@ function createMainDiv(ifsample) {
     div.appendChild(div2);
     div2.id = "#datatable" + nextIndex;
     let div3 = document.createElement("button");
-    div3.id = "xButton"+ nextIndex;
-    div3.innerHTML= "X";
-    div3.addEventListener("click", function() {
+    div3.id = "xButton" + nextIndex;
+    div3.innerHTML = "X";
+    div3.addEventListener("click", function () {
 
         //usuwa wychodzące strzałki
         let lastcolindex = div.getAttribute("lastcolindex");
-        if(div.hasAttribute("connectedcells")) {
+        if (div.hasAttribute("connectedcells")) {
             let rowindexes = div.getAttribute("connectedcells").split(";");
             for (let i = 0; i < rowindexes.length; i++) {
                 disconnect(document.getElementById(rowindexes[i]))
             }
         }
         //usuwa przychodzące strzałki
-        if(div.hasAttribute("connections")) {
+        if (div.hasAttribute("connections")) {
             let connections = div.getAttribute("connections").split(";");
             for (let i = 0; i < connections.length; i++) {
                 disconnect(document.getElementById(connections[i].split(",")[0]))
             }
         }
 
-        this.parentElement.remove();});
+        this.parentElement.remove();
+    });
     div.appendChild(div1);
     div.appendChild(div3);
     div.appendChild(div2);
 
     document.body.appendChild(div);
 
-    if(!ifsample) {
+    if (!ifsample) {
         let name = document.getElementById("tabName").value;
         let cols = document.getElementById("colNames").value;
         let args = document.getElementById("argNames").value;
         let rows = document.getElementById("rowCount").value;
-        let colsAndArgs = cols + ";__;" + args +";   --->  ";
+        let colsAndArgs = cols + ";__;" + args + ";   --->  ";
         let colsarray = colsAndArgs.split(";");
         //let colsarray = cols.split(";");
-        if(name==""){
+        if (name == "") {
             div1.textContent = "Click here to move";
-        }
-        else{
+        } else {
             div1.textContent = name;
-            div.setAttribute("name",name);
+            div.setAttribute("name", name);
 
         }
-        if ((!name && !cols && !rows)||ifsample) {
-            div.setAttribute("lastcolindex","4");
+        if ((!name && !cols && !rows) || ifsample) {
+            div.setAttribute("lastcolindex", "4");
             createSampleTable(div2);
         } else {
-            div.setAttribute("lastcolindex",colsarray.length);
-            console.log("cols"+colsarray.length);
+            div.setAttribute("lastcolindex", colsarray.length);
+            console.log("cols" + colsarray.length);
             createTableWithParameters(div2, colsarray, rows);
         }
-    }
-    else{
+    } else {
         div1.textContent = "Click here to move";
         createSampleTable(div2);
     }
@@ -75,14 +74,14 @@ function createMainDiv(ifsample) {
     addListeners();
     dragElement(div);
 
-    lastOffsetBottom=280;
-    foundparking=true;
+    lastOffsetBottom = 280;
+    foundparking = true;
     getParkingLot(div);
     //każda kolejny div jest tworzony 16px od końca poprzedniego
-    div.style.top = (lastOffsetBottom   +"px");
+    div.style.top = (lastOffsetBottom + "px");
     //lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
-    div.style.left = (div.offsetLeft +50) + "px";
-
+    div.style.left = (div.offsetLeft + 50) + "px";
+}
 
 var lastOffsetBottom=280;
 var index = 0;
@@ -197,11 +196,28 @@ function createMainDivJ(name,cols,data) {
     return div
 
 }
-function createTableWithParametersJ(div,cols,data){
-    var ret= new DataTable(div, {
+    function createTableWithParameters(div,colsarray,rows=3){
+        let rowscount=parseInt(rows);
+        if(!Number.isInteger(rowscount)){
+            rowscount=3;
+        }
+        let rowsdata=[];
+        for(let j=0;j<rowscount;j++) {
+            const newdata =new Array(colsarray.length);
+            var newdata2=newdata.fill("   ");
+            rowsdata.push(newdata2);
+        }
+        var ret= new DataTable(div, {
+
+            columns: colsarray,
+            data: rowsdata
+        });
+        tabletable["'"+div.id+"'"]=ret;
+        return ret;
+    }
 
 
-function createMainDivJ(name,cols,data) {
+function createMainDivJ(name,cols,data){
     let nextIndex = getNextIndex();
     let div = document.createElement("div");
     div.id = "maindiv" + nextIndex;

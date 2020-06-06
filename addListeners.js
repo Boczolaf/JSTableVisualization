@@ -21,7 +21,7 @@ function addListeners(){
 
                     }
 
-                    let connections = event.composedPath()[2].value.split(",");
+                    let connections = event.composedPath()[0].value.split(",");
                     for(let g=0; g<connections.length;g++) {
                         let el2name = "div[name='" + connections[g] + "']";
                         let el2 = document.querySelector(el2name.replace(/\s+/g, ""));
