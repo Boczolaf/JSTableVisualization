@@ -2,6 +2,7 @@
 //tworzy tabele z podanych wartości
 //jeśli ifsample==1 albo inputy są puste to tworzy przykładową
 function createMainDiv(ifsample) {
+
     let nextIndex = getNextIndex();
     let div = document.createElement("div");
     div.id = "maindiv" + nextIndex;
@@ -35,6 +36,7 @@ function createMainDiv(ifsample) {
         }
 
         this.parentElement.remove();
+        pushToHistory();
     });
     div.appendChild(div1);
     div.appendChild(div3);
@@ -74,13 +76,14 @@ function createMainDiv(ifsample) {
     addListeners();
     dragElement(div);
 
-    lastOffsetBottom = 280;
+    lastOffsetBottom = 350;
     foundparking = true;
     getParkingLot(div);
     //każda kolejny div jest tworzony 16px od końca poprzedniego
     div.style.top = (lastOffsetBottom + "px");
     //lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
     div.style.left = (div.offsetLeft + 50) + "px";
+    pushToHistory();
 }
 
 var lastOffsetBottom=280;
@@ -186,63 +189,17 @@ function createMainDivJ(name,cols,data) {
     div.setAttribute("name",name);
     div.setAttribute("lastcolindex",cols.length);
     createTableWithParametersJ(div2, cols, data);
-    console.log("##############################################")
     addListeners();
     dragElement(div);
     //każda kolejny div jest tworzony 16px od końca poprzedniego
     div.style.top = (lastOffsetBottom   +"px");
     lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
     div.style.left = (div.offsetLeft +50) + "px";
-    return div
+    return div;
 
 }
-    function createTableWithParameters(div,colsarray,rows=3){
-        let rowscount=parseInt(rows);
-        if(!Number.isInteger(rowscount)){
-            rowscount=3;
-        }
-        let rowsdata=[];
-        for(let j=0;j<rowscount;j++) {
-            const newdata =new Array(colsarray.length);
-            var newdata2=newdata.fill("   ");
-            rowsdata.push(newdata2);
-        }
-        var ret= new DataTable(div, {
-
-            columns: colsarray,
-            data: rowsdata
-        });
-        tabletable["'"+div.id+"'"]=ret;
-        return ret;
-    }
 
 
-function createMainDivJ(name,cols,data){
-    let nextIndex = getNextIndex();
-    let div = document.createElement("div");
-    div.id = "maindiv" + nextIndex;
-    div.className="maindiv";
-    let div1 = document.createElement("div");
-    div1.id = "divheader" + nextIndex;
-    let div2 = document.createElement("div");
-    div2.id = "datatable" + nextIndex;
-    div.appendChild(div1);
-    div.appendChild(div2);
-    document.body.appendChild(div);
-    div1.textContent = name;
-    div.setAttribute("name",name);
-    div.setAttribute("lastcolindex",cols.length);
-    createTableWithParametersJ(div2, cols, data);
-    console.log("##############################################")
-    addListeners();
-    dragElement(div);
-    //każda kolejny div jest tworzony 16px od końca poprzedniego
-    div.style.top = (lastOffsetBottom   +"px");
-    lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
-    div.style.left = (div.offsetLeft +50) + "px";
-    return div
-
-}
 function createTableWithParametersJ(div,cols,data){
     var ret= new DataTable(div, {
 
