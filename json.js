@@ -230,20 +230,22 @@ function allFromJsonHistory(files){
 
         }
 
-        var maindivs = document.querySelectorAll("div.maindiv");
-        for (i = 0; i < maindivs.length; i++) {
-            dragElement(maindivs[i]);
-            let el1arr=maindivs[i].querySelectorAll("td[data-col-index='"+maindivs[i].getAttribute("lastcolindex")+"']");
-            for(let k =0;k<el1arr.length;k++){
-                let contentellipsis=el1arr[k].querySelector(".content.ellipsis");
-                if(contentellipsis!=0){
-                    let el2=document.querySelector("div[name='"+contentellipsis.innerHTML.replace(/\s+/g, "")+"']");
-                    if(el2) {
+    var maindivs = document.querySelectorAll("div.maindiv");
+    for (i = 0; i < maindivs.length; i++) {
+        dragElement(maindivs[i]);
+        let el1arr=maindivs[i].querySelectorAll("td[data-col-index='"+maindivs[i].getAttribute("lastcolindex")+"']");
+        for(let k =0;k<el1arr.length;k++){
+            let contentellipsis=el1arr[k].querySelector(".content.ellipsis");
+            if(contentellipsis!=0){
+                let connections = contentellipsis.innerHTML.split(",");
+                for(let g=0; g<connections.length;g++) {
+                    let el2 = document.querySelector("div[name='" + connections[g].replace(/\s+/g, "") + "']");
+                    if (el2) {
                         connectElements(el1arr[k], el2);
                     }
-
                 }
             }
-
         }
+
+    }
 }
