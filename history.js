@@ -1,32 +1,42 @@
-let history = [newjsonwritehistory()];
+let history = [];
 let historyCount = 0;
 let maxCount =0;
-/*const observer = new MutationObserver(pushToHistory);
-let whole = document.body.childNodes;
-observer.observe(document.querySelectorAll(".maindiv"),{attributes:true,
-    characterData: true,
-    childList: true,
-    attributeFilter : true,
-    attributeOldValue : true,
-    characterDataOldValue : true,
-    subtree : true});*/
+var observer = new MutationObserver(pushToHistory);
 
-function pushToHistory(){
-    if(historyCount<maxCount){
+
+observer.observe(document.body, { childList: true, subtree: true });
+window.onload=function () {
+    history = [newjsonwritehistory()];
+    historyCount = 0;
+    maxCount =0;
+}
+/*
+document.body.addEventListener('change', function () {
+    console.log("History change");
+    newjsonwritehistory();
+    pushToHistory();
+});*/
+
+function pushToHistory() {
+    if (historyCount < maxCount) {
         history.splice(historyCount+1);
     }
-    let alter =newjsonwritehistory()
-    if(history[historyCount]!=(alter)) {
+    let alter = newjsonwritehistory();
+    if(alter != history[historyCount-1]){
+        console.log("save");
         history.push(alter);
         historyCount = historyCount + 1;
         maxCount = historyCount;
+
     }
 }
 
 function undo(){
+    observer.disconnect();
     if(historyCount<1){
         console.log("Cannot undo, start of history");
     }else {
+        console.log("Undoing");
         historyCount = historyCount - 1;
         let allDivsPast = document.querySelectorAll(".maindiv");
         for(let i=0;i<allDivsPast.length;i++){
@@ -54,9 +64,11 @@ function undo(){
         }
     }
     index = 0;
+    observer.observe(document.body, { childList: true, subtree: true });
 }
 
 function redo(){
+    observer.disconnect();
     if(historyCount==maxCount){
         console.log("Cannot redo, end of history");
     }else {
@@ -89,5 +101,6 @@ function redo(){
         }
     }
     index = 0;
+    observer.observe(document.body, { childList: true, subtree: true });
 }
 

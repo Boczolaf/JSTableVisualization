@@ -36,7 +36,6 @@ function createMainDiv(ifsample) {
         }
 
         this.parentElement.remove();
-        pushToHistory();
     });
     div.appendChild(div1);
     div.appendChild(div3);
@@ -83,7 +82,6 @@ function createMainDiv(ifsample) {
     div.style.top = (lastOffsetBottom + "px");
     //lastOffsetBottom= lastOffsetBottom+ div.offsetHeight+16;
     div.style.left = (div.offsetLeft + 50) + "px";
-    pushToHistory();
 }
 
 var lastOffsetBottom=280;
