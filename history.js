@@ -5,6 +5,7 @@ var observer = new MutationObserver(pushToHistory);
 
 
 observer.observe(document.body, { childList: true, subtree: true });
+
 window.onload=function () {
     history = [newjsonwritehistory()];
     historyCount = 0;
@@ -22,7 +23,7 @@ function pushToHistory() {
         history.splice(historyCount+1);
     }
     let alter = newjsonwritehistory();
-    if(alter != history[historyCount-1]){
+    if(document.getElementsByClassName("editing").length==0){
         console.log("save");
         history.push(alter);
         historyCount = historyCount + 1;

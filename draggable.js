@@ -56,7 +56,7 @@ function dragElement(elmnt) {
         /* stop moving when mouse button is released:*/
         document.onmouseup = null;
         document.onmousemove = null;
-
+        pushToHistory();
 
     }
 }
