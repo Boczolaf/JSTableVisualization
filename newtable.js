@@ -116,7 +116,7 @@ function getParkingLot(div){
 function createSampleTable(div){
     return new DataTable(div, {
         checkboxColumn: true,
-        columns: ['Name', 'Position','', 'Salary',' ->'],
+        columns: ['Name', 'Position','', 'Salary',' ->',{dropdown: false}],
         data: [
             ['123', 'Software Developer','', '$1200',''],
             ['321', 'Software Engineer','', '$1400',''],
@@ -137,9 +137,12 @@ function createTableWithParameters(div,colsarray,rows=3){
         var newdata2=newdata.fill("   ");
         rowsdata.push(newdata2);
     }
+    let colsarray2=[]
+    for(let k=0;k<colsarray.length;k++){
+        colsarray2[k]={name: colsarray[k], dropdown:false}
+    }
     var ret= new DataTable(div, {
-
-        columns: colsarray,
+        columns: colsarray2,
         data: rowsdata
     });
     tabletable["'"+div.id+"'"]=ret;
