@@ -24,15 +24,15 @@ Dwa przyciski podłączone do funkcji undo() oraz redo().
 Trzy przyciski służące do obsługi wczytywania z pliku json: jeden do zapisu z funkcją newjsonwrite(), jeden z id "selectFiles" do wyboru pliku do wczytania, oraz jeden z allFromJson() do wczytania pliku.
 
 ## Struktura:
--addListeners.js - dodaje EventListenera do komórek ostatniej kolumny do obsługi tworzenia połączeń;
--connection.js - tworzenie połączeń i rysowanie strzałek;
--draggable.js - przesuwanie tabelek;
--history.js - zapisuje historię stanu oraz obsługa undo/redo;
--json.js - zapisywanie/odczytywanie z jsona;
--newtable.js - tworzenie nowych tabelek;
--onenter.js - w formatce można tworzyć tabelki z inputów wciskając Enter;
--styles.css - style 
--new.html - html z formatkami wykorzystującymi funkcjonalność
+-addListeners.js - dodaje EventListenera do komórek ostatniej kolumny do obsługi tworzenia połączeń  
+-connection.js - tworzenie połączeń i rysowanie strzałek  
+-draggable.js - przesuwanie tabelek  
+-history.js - zapisuje historię stanu oraz obsługa undo/redo  
+-json.js - zapisywanie/odczytywanie z jsona  
+-newtable.js - tworzenie nowych tabelek  
+-onenter.js - w formatce można tworzyć tabelki z inputów wciskając Enter  
+-styles.css - style   
+-new.html - html z formatkami wykorzystującymi funkcjonalność  
 
 ## Źródła i inne
 https://docs.google.com/document/d/1G-Bu3y2FyxGvGvYSgwIfbiWQJuW5nnagwibTRSHJejs/edit?usp=sharing
