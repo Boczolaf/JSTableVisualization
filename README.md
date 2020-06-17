@@ -37,3 +37,4 @@ Trzy przyciski służące do obsługi wczytywania z pliku json: jeden do zapisu 
 ## Źródła i inne
 https://docs.google.com/document/d/1G-Bu3y2FyxGvGvYSgwIfbiWQJuW5nnagwibTRSHJejs/edit?usp=sharing
 https://github.com/frappe/datatable Licencja MIT
+ 
