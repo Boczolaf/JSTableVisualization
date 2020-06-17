@@ -24,7 +24,6 @@ Dwa przyciski podłączone do funkcji undo() oraz redo().
 Trzy przyciski służące do obsługi wczytywania z pliku json: jeden do zapisu z funkcją newjsonwrite(), jeden z id "selectFiles" do wyboru pliku do wczytania, oraz jeden z allFromJson() do wczytania pliku.
 
 ## Struktura:
-
 -addListeners.js - dodaje EventListenera do komórek ostatniej kolumny do obsługi tworzenia połączeń;
 -connection.js - tworzenie połączeń i rysowanie strzałek;
 -draggable.js - przesuwanie tabelek;
