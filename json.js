@@ -1,251 +1,173 @@
 
+function fromJson() {
+    let files = document.getElementById('selectFiles').files;
+    if (files.length <= 0) {
+        return false;
+    }
+    let fr = new FileReader();
+    fr.onload = function (e) {
+        //delete all previous tables
+        deleteAllTables();
+        let result = JSON.parse(e.target.result);
+        index = result['index'];
+        let dataToProcess = result['data'];
+        for(let i =0; i< dataToProcess.length;i++){
+            createDivTableFromArray(dataToProcess[i]);
+        }
+
+    }
+    fr.readAsText(files.item(0));
+}
+function createDivTableFromArray(data) {
+    let title = data[0];
+    let id = data[1];
+    let indexOfFirstOut = data[2];
+    let content = data[3];
+    let div = document.createElement("div");
+    div.id = id
+    let currIndex = parseInt(id.replace("divTable",""));
+    div.style.position = "absolute";
+    div.appendChild(setupHeaderDiv(currIndex,title));
+    div.appendChild(createTableFromContent(id,content,indexOfFirstOut));
+    reDrawArrows(index);
+    document.body.insertBefore(div, document.getElementById("canvas"));
+    dragElement(document.getElementById(div.id));
+
+}
+function createTableFromContent(id, content,indexOfFirstOut){
+    let table = document.createElement("table");
+    table.id = id.replace("divTable","table");
+    table.style.border = "thin solid #000000"
+    table.style.borderCollapse = "collapse";
+    //arguments
+    //get number of rows
+    let row;
+    row = table.insertRow(0);
+    let cell;
+//setting up top of table
+    for (let i = 0; i < content[0].length-1; i++) {
+        cell = row.insertCell(i)
+        cell.style.padding = "20px";
+        cell.innerText = content[0][i];
+        cell.style.border = "thin solid #000000";
+        if(i<indexOfFirstOut){
+            cell.id = table.id + "/column" +i +"/in"
+            cell.style.backgroundColor = blue;
+        }
+        else{
+            cell.id = table.id + "/column" +i +"/out"
+            cell.style.backgroundColor = red;
+        }
+        cell.setAttribute('onclick', 'onClickForFirstRow(this)');
+        createDeleteButton(cell, "column");
+
+    }
+    //connections
+    cell = row.insertCell(content[0].length-1);
+    cell.style.padding = "20px";
+    cell.innerText = content[0][content[0].length-1];
+    cell.style.border = "thin solid #000000";
+    cell.style.backgroundColor = white;
+    //rest of data
+    let h =0;
+    let currIndex;
+    for (let i = 0; i< content.length-1;i++){
+        currIndex = i+1;
+        row = table.insertRow();
+        for(let j =0;j < content[currIndex].length;j++){
+            cell = row.insertCell(j);
+            cell.style.backgroundColor = white;
+            cell.innerText = content[currIndex][j];
+            if(j ===0 ){
+                cell.id = table.id +"/row" + i;
+                createDeleteButton(cell,"row");
+                cell.setAttribute('onclick', 'onClick(this)');
+            }
+            else if(j===content[currIndex].length-1){
+                cell.id = table.id +"/connection" + i;
+                cell.setAttribute('onclick', 'onClickConnection(this)');
+            }
+            else{
+                cell.setAttribute('onclick', 'onClick(this)');
+                cell.id = table.id + "/cell" + h;
+                h++;
+            }
+            cell.style.padding = "20px";
+            cell.style.border = "thin solid #000000";
+        }
+    }
+    return table;
+
+}
+
+function deleteAllTables() {
+    let element;
+    for(let i =0; i<=index;i++){
+        element = document.getElementById("divTable" + i);
+        if(element){
+            document.body.removeChild(element);
+        }
+    }
+
+}
+function toJson(){
+    let json={};
+    let mainDiv;
+    let header;
+    let table;
+    let id;
+    let rows;
+    let wholeData =[];
+    let data = []
+    let dataRows = []
+    let dataCells = [];
+    json['index'] = index;
+    let indexOfFirstOut = "empty";
+    let savedIndex = false;
+    for(let i = 0; i<=index;i++){
+        id = "divTable"+i;
+        mainDiv = document.getElementById(id);
+        if(mainDiv !== null){
+            header = mainDiv.childNodes[0];
+            data.push(header.textContent);
+            data.push(id);
+            table = mainDiv.childNodes[1];
+            rows = table.rows;
+            for(let j =0; j<rows.length;j++){
+                dataCells = []
+                for(let k = 0; k< rows[j].cells.length;k++){
+                    if(rows[j].cells[k].id){
+                        if(typeof rows[j].cells[k].id.split("/")[2] !== 'undefined'){
+                            if(rows[j].cells[k].id.split("/")[2].localeCompare("out")===0 && !savedIndex){
+                                indexOfFirstOut = k;
+                                savedIndex = true;
+                            }
+                        }
+                    }
+                    dataCells.push(rows[j].cells[k].innerText);
+                }
+                dataRows.push(dataCells);
+            }
+            data.push(indexOfFirstOut);
+            data.push(dataRows);
+            dataRows =[];
+        }
+        if(data.length){
+            wholeData.push(data);
+            data = [];
+        }
+    }
+
+    json['data'] = wholeData;
+    downloadObjectAsJson(json,"MyTables")
+
+}
 function downloadObjectAsJson(exportObj, exportName){
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
-    var downloadAnchorNode = document.createElement('a');
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    let downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href",     dataStr);
     downloadAnchorNode.setAttribute("download", exportName + ".json");
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
-}
-
-//uzupełnia document.body według pliku
-function allFromJson(){
-    let allDivsPast = document.querySelectorAll(".maindiv");
-    for(let i=0;i<allDivsPast.length;i++){
-        allDivsPast[i].remove();
-    }
-    var files = document.getElementById('selectFiles').files;
-    if (files.length <= 0) {
-        return false;
-    }
-
-    var fr = new FileReader();
-
-    fr.onload = function(e) {
-        var result = JSON.parse(e.target.result);
-        var parser = new DOMParser();
-        var htmlDoc2 = parser.parseFromString(result.Content, "text/html");
-        jsonResult = result;
-
-        let tablenames = Object.keys(jsonResult);
-        for (let i = 0; i < Object.keys(jsonResult).length; i++) {
-            let data = [[],[],[]]
-
-            for (let j = 0; j < Object.keys(jsonResult[tablenames[i]]['data']).length; j++) {
-
-                let rowdataobject = jsonResult[tablenames[i]]['data'][j];
-                let rowdataarray = [];
-                for (let k = 0; k < Object.keys(rowdataobject).length; k++) {
-
-                    rowdataarray[k] = rowdataobject[Object.keys(rowdataobject)[k]]
-                }
-                data[j] = (rowdataarray);
-            }
-
-
-
-        let name = tablenames[i];
-        let cols = jsonResult[tablenames[i]]['columns'];
-
-
-            let maindiv = createMainDivJ(name, cols, data);
-            for (let j = 0; j < Object.keys(jsonResult[tablenames[i]]['maindiv']).length; j++) {
-                let attname=Object.keys(jsonResult[tablenames[i]]['maindiv'])[j];
-                let attval=jsonResult[tablenames[i]]['maindiv'][attname];
-                attname=attname.substr(1,attname.length-2);
-                maindiv.setAttribute(attname,attval)
-
-            }
-            maindiv.removeAttribute("connections");
-
-        }
-
-        var maindivs = document.querySelectorAll("div.maindiv");
-        for (i = 0; i < maindivs.length; i++) {
-            dragElement(maindivs[i]);
-            let el1arr=maindivs[i].querySelectorAll("td[data-col-index='"+maindivs[i].getAttribute("lastcolindex")+"']");
-            for(let k =0;k<el1arr.length;k++){
-                let contentellipsis=el1arr[k].querySelector(".content.ellipsis");
-                if(contentellipsis!=0){
-                    let connections = contentellipsis.innerHTML.split(",");
-                    for(let g=0; g<connections.length;g++) {
-                        let el2 = document.querySelector("div[name='" + connections[g].replace(/\s+/g, "") + "']");
-                        if (el2) {
-                            connectElements(el1arr[k], el2);
-                        }
-                    }
-                }
-            }
-
-        }
-
-
-    }
-    ummyes();
-
-
-    fr.readAsText(files.item(0));
-
-}
-
-function newjsonwrite(){
-    let allMainDivs= document.querySelectorAll(".maindiv")
-    let json={};
-
-    for(let i=0;i<allMainDivs.length;i++){
-        let maindivs=[];
-        let colnames=[];
-        let rows=[];
-
-        let tmp={};
-        let attnames = allMainDivs[i].getAttributeNames()
-        for(j=0;j<attnames.length;j++){
-            let tmp2="'"+attnames[j]+"'";
-            tmp[tmp2]=allMainDivs[i].getAttribute(attnames[j])
-        }
-        maindivs[i]=tmp;
-        let coldivs = allMainDivs[i].querySelector(".data-table-header").querySelectorAll(".content.ellipsis")
-        for(let j=1;j<coldivs.length;j++){
-            //outerText czy innerHtml: możeliwe że outerTExt psuje, usuwa content.ellipsis
-            colnames[j-1]=coldivs[j].innerHTML;
-        }
-
-        let rowdivs=allMainDivs[i].querySelector(".data-table-body").querySelectorAll(".data-table-row");
-        for(let j=0;j<rowdivs.length;j++){
-            let singlerow=rowdivs[j].querySelectorAll(".content.ellipsis")
-            let singlerowdata=[];
-            //k=1 bo pierwsz kolumna dodawana jest automatycznie i żeby jej nie kopiowac
-            for(let k=1;k<singlerow.length;k++){
-                singlerowdata[k-1]=singlerow[k].innerHTML;
-
-            }
-            rows[j]=singlerowdata;
-        }
-        let jsontmp={}
-        jsontmp['maindiv']=tmp;
-        jsontmp['columns']=colnames;
-        jsontmp['data']=rows;
-        json[allMainDivs[i].getAttribute("name")]=jsontmp;
-    }
-
-    console.log(json);
-    downloadObjectAsJson(json, "data");
-}
-
-
-function allToJson() {
-    var body = [].slice.call(document.getElementsByTagName('body'))[0];
-    var json= body.innerHTML;
-    //downloadObjectAsJson(json, "data");
-    return json;
-
-
-}
-function newjsonwritehistory(){
-    let allMainDivs= document.querySelectorAll(".maindiv");
-    let json={};
-
-    for(let i=0;i<allMainDivs.length;i++){
-        let maindivs=[];
-        let colnames=[];
-        let rows=[];
-
-        let tmp={};
-        let attnames = allMainDivs[i].getAttributeNames()
-        for(j=0;j<attnames.length;j++){
-            let tmp2="'"+attnames[j]+"'";
-            tmp[tmp2]=allMainDivs[i].getAttribute(attnames[j])
-        }
-        maindivs[i]=tmp;
-        let coldivs = allMainDivs[i].querySelector(".data-table-header").querySelectorAll(".content.ellipsis")
-        for(let j=1;j<coldivs.length;j++){
-            //outerText czy innerHtml: możeliwe że outerTExt psuje, usuwa content.ellipsis
-            colnames[j-1]=coldivs[j].innerHTML;
-        }
-
-        let rowdivs=allMainDivs[i].querySelector(".data-table-body").querySelectorAll(".data-table-row");
-        for(let j=0;j<rowdivs.length;j++){
-            let singlerow=rowdivs[j].querySelectorAll(".content.ellipsis")
-            let singlerowdata=[];
-            //k=1 bo pierwsz kolumna dodawana jest automatycznie i żeby jej nie kopiowac
-            for(let k=1;k<singlerow.length;k++){
-                singlerowdata[k-1]=singlerow[k].innerHTML;
-
-            }
-            rows[j]=singlerowdata;
-        }
-        let jsontmp={}
-        jsontmp['maindiv']=tmp;
-        jsontmp['columns']=colnames;
-        jsontmp['data']=rows;
-        json[allMainDivs[i].getAttribute("name")]=jsontmp;
-    }
-
-    console.log(json);
-    return json;
-}
-
-
-function allFromJsonHistory(files){
-
-    if (files.length <= 0) {
-        return false;
-    }
-
-    var fr = new FileReader();
-
-        jsonResult = files;
-
-        let tablenames = Object.keys(jsonResult);
-        for (let i = 0; i < Object.keys(jsonResult).length; i++) {
-            let data = [[],[],[]]
-
-            for (let j = 0; j < Object.keys(jsonResult[tablenames[i]]['data']).length; j++) {
-
-                let rowdataobject = jsonResult[tablenames[i]]['data'][j];
-                let rowdataarray = [];
-                for (let k = 0; k < Object.keys(rowdataobject).length; k++) {
-
-                    rowdataarray[k] = rowdataobject[Object.keys(rowdataobject)[k]]
-                }
-                data[j] = (rowdataarray);
-            }
-
-
-
-            let name = tablenames[i];
-            let cols = jsonResult[tablenames[i]]['columns'];
-
-
-            let maindiv = createMainDivJ(name, cols, data);
-            for (let j = 0; j < Object.keys(jsonResult[tablenames[i]]['maindiv']).length; j++) {
-                let attname=Object.keys(jsonResult[tablenames[i]]['maindiv'])[j];
-                let attval=jsonResult[tablenames[i]]['maindiv'][attname];
-                attname=attname.substr(1,attname.length-2);
-                maindiv.setAttribute(attname,attval)
-
-            }
-            maindiv.removeAttribute("connections");
-
-        }
-
-    var maindivs = document.querySelectorAll("div.maindiv");
-    for (i = 0; i < maindivs.length; i++) {
-        dragElement(maindivs[i]);
-        let el1arr=maindivs[i].querySelectorAll("td[data-col-index='"+maindivs[i].getAttribute("lastcolindex")+"']");
-        for(let k =0;k<el1arr.length;k++){
-            let contentellipsis=el1arr[k].querySelector(".content.ellipsis");
-            if(contentellipsis!=0){
-                let connections = contentellipsis.innerHTML.split(",");
-                for(let g=0; g<connections.length;g++) {
-                    let el2 = document.querySelector("div[name='" + connections[g].replace(/\s+/g, "") + "']");
-                    if (el2) {
-                        connectElements(el1arr[k], el2);
-                    }
-                }
-            }
-        }
-
-    }
 }

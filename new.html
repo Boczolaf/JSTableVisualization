@@ -6,76 +6,50 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <body>
 
-<h1>Draggable DIV Element</h1>
+<h1>Data tables</h1>
 <form class="formcreate">
     <label for="tabName">Insert table name</label><br/>
-    <input type="text" id="tabName" name="name"><br/>
-
+    <input type="text" id="tabName" name="name">
+    <label for="tabName">Or edit table (type id in the field)</label>
+    <input type="text" id="tabId" name="tabId">
+    <button type="button" id="editTableByIdButton"  onclick ="editTableById()">Get</button><br/>
     <label for="colNames">Insert columns headers separated with ";", first inputs, then outputs:</label><br/>
     <input type="text" id="colNames" name="cols">
     <input type="text" id="argNames" name="args"><br/>
 
     <label for="rowCount">number of rows</label><br/>
     <input type="text" id="rowCount" default="3">
-
-    <button type="button" onclick="createMainDiv(0)">Add table</button>
+    <button type="button" id="addButton" onclick ="setupMainDiv()">Add table</button>
 </form>
 <br>
-<button type="button" onclick="newjsonwrite()">download .jason file</button>
+<button type="button" onclick = "toJson()">download .json file</button>
 <input type="file" id="selectFiles" value="Import" />
-<button type="button" id="import" onclick="allFromJson()">upload .jason file</button>
+<button type="button" id="import" onclick = "fromJson()">upload .json file</button>
 <br/>
-<p>Hold blue element do drag table</p>
+<p>Hold green element do drag table</p>
 <br>
-<button type="button" id="undo" onclick="undo()">undo</button>
-<button type="button" id="redo" onclick="redo()">redo</button>
+<button type="button" id="undo" onclick = "undo()">undo</button>
+<button type="button" id="redo" onclick = "redo()">redo</button>
 <br/>
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-<style>
-    #svgid{
-        margin-top: 40px;
-        position: absolute;
-    }
-</style>
-
-<svg id = "svgid" xmlns="http://www.w3.org/2000/svg" width="100vw" height="100vh">
-    <defs>
-        <marker id="arrowhead" viewBox="0 0 10 10" refX="5" refY="5"
-                markerWidth="6" markerHeight="6" orient="auto">
-            <path d="M 0 0 L 10 5 L 0 10 z" />
-        </marker>
-    </defs>
-    <g id="gsvg" fill="none" stroke="black" stroke-width="1" marker-end="url(#arrowhead)">
-        <path id="newArrow"/>
-    </g>
-</svg>
+<p>
+    <label for="editField">Edit field :</label>
+    <input type = "text" id ="editField"/>
+    <button type="button" id="deleteModeButton"  onclick ="switchDeleteMode()">Delete mode</button>
+</p>
+<canvas id="canvas" width="3000" height="1500">Your browser does not support the HTML canvas tag.</canvas>
 
 
 
 
-<link href="https://unpkg.com/frappe-datatable@0.0.5/dist/frappe-datatable.min.css" rel="stylesheet">
-<!-- include the dependencies -->
-<script src="https://unpkg.com/sortablejs@1.7.0/Sortable.min.js"></script>
-<script src="https://unpkg.com/clusterize.js@0.18.0/clusterize.min.js"></script>
-<!-- include the lib -->
-<script src="https://unpkg.com/frappe-datatable@0.0.5/dist/frappe-datatable.min.js"></script>
-<!-- initialize DataTable -->
 
 
+
+<script src="newTable.js"></script>
 <script src="draggable.js"></script>
-<script src="newtable.js"></script>
-<script src="onenter.js"></script>
-<script src="connection.js"></script>
+<script src="changeTable.js"></script>
+<script src="connections.js"></script>
 <script src="json.js"></script>
-<script src="addListeners.js"></script>
 <script src="history.js"></script>
-<script >var tabletable={};
-var jsonResult={};
-arrindex=0;</script>
 
 </body>
 </html>
