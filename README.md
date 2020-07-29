@@ -17,7 +17,7 @@
 ## Użytek: 
 Aby w pełni wykorzystać możliwości datatable trzeba skonfigurować trzy elementy:
 # 1. 
-Formatka do tworzenia tabel zawierająca 4 inputy: jeden z id "tabName" do wpisania nazwy tabeli, jeden z id "colNames" dla nazw kolumn wejścia(oddzielanych średnikiem), jeden z id "argNames" dla nazw kolumn wyjścia(oddzielanych średnikiem), oraz jeden z id "rowCount" z liczbą wierszy w tabeli; a także przycisk podłączony do funkcji createMainDiv(0);
+Formatka do tworzenia tabel zawierająca 4 inputy: jeden z id "tabName" do wpisania nazwy tabeli, jeden z id "colNames" dla nazw kolumn wejścia(oddzielanych średnikiem), jeden z id "argNames" dla nazw kolumn wyjścia(oddzielanych średnikiem), oraz jeden z id "rowCount" z liczbą wierszy w tabeli; a także przycisk podłączony do funkcji createMainDiv(0);. Oprócz przycisków do tworzenia nowych tabel, znajduje się również przycisk "Get", który służy do pobrania informacji o tabeli w celu jej edycji - dodanie nowych kolumn/wierszy.
 # 2.
 Dwa przyciski podłączone do funkcji undo() oraz redo().
 # 3.
@@ -25,16 +25,16 @@ Trzy przyciski służące do obsługi wczytywania z pliku json: jeden do zapisu 
 
 ## Struktura:
 -addListeners.js - dodaje EventListenera do komórek ostatniej kolumny do obsługi tworzenia połączeń  
--connection.js - tworzenie połączeń i rysowanie strzałek  
+-connections.js - tworzenie połączeń i rysowanie strzałek  
 -draggable.js - przesuwanie tabelek  
 -history.js - zapisuje historię stanu oraz obsługa undo/redo  
 -json.js - zapisywanie/odczytywanie z jsona  
--newtable.js - tworzenie nowych tabelek  
+-newTable.js - tworzenie nowych tabel  
+-changeTable.js - zmienianie tabel  
 -onenter.js - w formatce można tworzyć tabelki z inputów wciskając Enter  
--styles.css - style   
 -new.html - html z formatkami wykorzystującymi funkcjonalność  
 
 ## Źródła i inne
 https://docs.google.com/document/d/1G-Bu3y2FyxGvGvYSgwIfbiWQJuW5nnagwibTRSHJejs/edit?usp=sharing
-https://github.com/frappe/datatable Licencja MIT
+
  
