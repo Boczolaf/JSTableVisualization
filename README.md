@@ -21,7 +21,7 @@ Formatka do tworzenia tabel zawierająca 4 inputy: jeden z id "tabName" do wpisa
 # 2.
 Dwa przyciski podłączone do funkcji undo() oraz redo().
 # 3.
-Trzy przyciski służące do obsługi wczytywania z pliku json: jeden do zapisu z funkcją newjsonwrite(), jeden z id "selectFiles" do wyboru pliku do wczytania, oraz jeden z allFromJson() do wczytania pliku.
+Trzy przyciski służące do obsługi wczytywania z pliku json: jeden do zapisu z funkcją newjsonwrite(), jeden z id "selectFiles" do wyboru pliku do wczytania, oraz jeden z fromJson() do wczytania pliku.
 
 ## Struktura:
 -addListeners.js - dodaje EventListenera do komórek ostatniej kolumny do obsługi tworzenia połączeń  
